@@ -6,7 +6,7 @@
 
 #include <ctype.h>
 #include <stdio.h>
-#include "lexical.h"
+#include "states-machine.h"
 
 State currentState = INITIAL_STATE;
 

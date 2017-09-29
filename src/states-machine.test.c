@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "lexical.h"
+#include "states-machine.h"
 #include "colors.h"
 
 /*
@@ -27,7 +27,7 @@ void assert(State actual, State expected) {
 void test(char *testDescription, void (*f)()) {
   beforeAll();
   (*f)();
-  printf(ANSI_COLOR_GREEN "✓ " ANSI_COLOR_RESET "%s\n", testDescription);
+  printf(ANSI_COLOR_GREEN "    ✓ " ANSI_COLOR_RESET "%s\n", testDescription);
 }
 
 void checkIdentifier() {
@@ -48,7 +48,11 @@ void checkInteger() {
 
 int main() {
 
+  printf(ANSI_COLOR_BLUE "\n  STATES MACHINE\n" ANSI_COLOR_RESET);
+
   test("Should identify string \"hello\" as an identifier", checkIdentifier);
   test("Should identify string \"12\" as an integer", checkInteger);
+
+  printf("\n");
   return(0);
 }

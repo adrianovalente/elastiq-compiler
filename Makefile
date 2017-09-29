@@ -2,10 +2,10 @@ make: src/main.c src/lexical.c
 	\mkdir -p dist
 	gcc -o dist/lexical src/main.c src/lexical.c -I.
 
-test: src/lexical.test.c src/lexical.c
+test: src/states-machine.test.c src/states-machine.c
 	@mkdir -p dist
-	@gcc -o dist/lexical.test src/lexical.test.c src/lexical.c -I.
-	@./dist/lexical.test
+	@gcc -o dist/states-machine.test src/states-machine.test.c src/states-machine.c -I.
+	@./dist/states-machine.test
 
 clean: $
 	\rm main
