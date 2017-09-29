@@ -99,4 +99,6 @@ Temporary Items
 
 # End of https://www.gitignore.io/api/c,osx,linux
 
+node_modules/
+
 dist/*
