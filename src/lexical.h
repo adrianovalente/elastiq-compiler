@@ -1,0 +1,1 @@
+void processChar(int a);
