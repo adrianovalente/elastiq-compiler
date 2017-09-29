@@ -1,0 +1,27 @@
+{
+  "name": "elastiq-compiler",
+  "version": "0.0.1",
+  "description": "elastiq-compiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "make test",
+    "test:watch": "nodemon --watch src -e js,h,c --exec 'make test || true'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adrianovalente/elastiq-compiler.git"
+  },
+  "keywords": [
+    "compiler",
+    "PCS2056"
+  ],
+  "author": "Adriano Valente <drico@elastiqx.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adrianovalente/elastiq-compiler/issues"
+  },
+  "homepage": "https://github.com/adrianovalente/elastiq-compiler#readme",
+  "devDependencies": {
+    "nodemon": "^1.12.1"
+  }
+}
