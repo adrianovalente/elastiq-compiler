@@ -1,6 +1,6 @@
-build: src/main.c src/hellomake.c
+lexical: src/main.c src/lexical.c
 	\mkdir -p dist
-	gcc -o dist/elastiq-compiler src/main.c src/hellomake.c -I.
+	gcc -o dist/lexical src/main.c src/lexical.c -I.
 
 clean: $
 	\rm main
