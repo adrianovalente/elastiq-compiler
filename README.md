@@ -5,6 +5,8 @@
 
 > elastiq is a flexible and simple imperative programming language you can use to build great applications
 
+[![Build Status](https://travis-ci.org/adrianovalente/elastiq-compiler.svg?branch=master)](https://travis-ci.org/adrianovalente/elastiq-compiler)
+
 ```
 program hello
 
