@@ -1,14 +1,22 @@
+#ifdef DEBUG
+#define D if(1)
+#else
+#define D if(0)
+#endif
+
 #include <ctype.h>
 #include <stdio.h>
-
-typedef enum {
-  INITIAL_STATE,
-  STATE_Q1,
-  STATE_Q2,
-  ERROR_STATE
-} State;
+#include "lexical.h"
 
 State currentState = INITIAL_STATE;
+
+void resetStateMachine() {
+  currentState = INITIAL_STATE;
+}
+
+State getCurrentState() {
+  return currentState;
+}
 
 /**
  * Returns a string that describes a state.
@@ -39,7 +47,7 @@ char *getStateDescription(State state) {
 void processChar(int a) {
   State nextState;
 
-  printf("Got the character: \"%c\"\n", a);
+  D printf("Got the character: \"%c\"\n", a);
 
   switch (currentState) {
     case INITIAL_STATE:
@@ -66,7 +74,7 @@ void processChar(int a) {
 
   }
 
-  printf(
+  D printf(
     "Transitioned from %s to %s\n",
     getStateDescription(currentState),
     getStateDescription(nextState)
