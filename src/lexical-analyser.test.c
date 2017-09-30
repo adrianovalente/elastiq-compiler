@@ -11,11 +11,21 @@ static const int EXPECTED_TOKENS_LENGTH = 5;
 Token *tokens[16] = { NULL };
 int tokensLength = 0;
 
+/*
+ * Storing the tokens in an array so we can test them after
+ */
 void onToken(Token *token) {
   tokens[tokensLength] = token;
   tokensLength++;
 }
 
+/**
+ * Gets the ordinal number to a given integer.
+ * Used to prettify the tests output.
+ *
+ * @param {int} n
+ * @returns {string}
+ */
 char *getOrdinalNumber(int n) {
   if (n == 0) return "1st";
   if (n == 1) return "2nd";
@@ -72,6 +82,11 @@ void assertTokenContents(int position, TokenType type, char *value) {
 
 }
 
+/**
+ * This is the main test function.
+ * Path to the fixture file (hello.el) is passed
+ * as a param when `make test` calls it.
+ */
 int main(int argc, char *argv[]) {
   char *filePath = argv[1];
   printf(ANSI_COLOR_BLUE "\n  LEXICAL ANALYSER\n" ANSI_COLOR_RESET);

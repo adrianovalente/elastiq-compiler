@@ -6,6 +6,12 @@
 #include "colors.h"
 #include "boolean.h"
 
+/**
+ * Returns the description (as a string) for a given token type.
+ *
+ * @param {TokenType} type
+ * @returns {string}
+ */
 char *getTokenTypeDescription(TokenType type) {
   switch (type) {
     case (IDENTIFIER)              : return "IDENTIFIER";
@@ -18,6 +24,12 @@ char *getTokenTypeDescription(TokenType type) {
   }
 }
 
+/**
+ * Returns true if a string is a reserved word.
+ *
+ * @param {string} str
+ * @returns {bool}
+ */
 bool isReservedWord(char *str) {
   int i;
   for (i = 0; i < NUMBER_OF_RESERVER_WORDS; i++) {
@@ -29,6 +41,14 @@ bool isReservedWord(char *str) {
 }
 
 
+/**
+ * Returns the token type of a given word, according to
+ * the final state of the recognizer machine.
+ *
+ * @param {State} state - the machine state when the execution finished
+ * @param {string} tokenValue - the token value
+ * @returns {TokenType}
+ */
 TokenType getTokenType(State state, char *tokenValue) {
   TokenType type;
   switch (state) {
