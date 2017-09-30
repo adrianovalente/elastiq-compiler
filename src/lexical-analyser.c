@@ -73,4 +73,6 @@ void getTokens() {
     currentChar = fgetc(fp);
   }
 
+  fclose(fp);
+
 }
