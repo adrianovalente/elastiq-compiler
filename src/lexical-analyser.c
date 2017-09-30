@@ -13,13 +13,19 @@ TokenType getTokenType(State state) {
   return (TokenType)0; // TODO IMPLEMENT
 }
 
-void onGetToken(Token *token) {
+void finalizeToken(char *value, State state) {
+  Token *token = malloc(sizeof(Token));
+  token->value = value;
+  token->type = getTokenType(state);
+  
+  // TODO implement interface with compiler main file
   printf(
     ANSI_COLOR_YELLOW "\n\nGot token with type: %s, value: %s\n\n" ANSI_COLOR_RESET,
     getTokenTypeDescription(token),
     token->value
   );
 }
+
 
 void addCharToToken(char *str, char a) {
   int len = strlen(str);
@@ -38,7 +44,10 @@ bool isSpacer(char a) {
   else return false;
 }
 
-void getTokens() { FILE *fp = fopen("/Users/drico/Desktop/hello.el", "r"); char currentChar;
+void getTokens() {
+  FILE *fp = fopen("/Users/drico/Desktop/hello.el", "r");
+  char currentChar;
+  State currentState;
 
   if (fp == NULL) {
     printf(ANSI_COLOR_RED  "Did not find file!" ANSI_COLOR_RESET);
@@ -49,34 +58,46 @@ void getTokens() { FILE *fp = fopen("/Users/drico/Desktop/hello.el", "r"); char 
   currentChar = fgetc(fp);
 
   while (currentChar != EOF) {
-    printf("next char is %c\n", currentChar);
-    processChar(currentChar);
+
+    printf("next char is %d\n", currentChar);
 
     if (isSpacer(currentChar)) {
-      printf(ANSI_COLOR_MAGENTA "\n\nSPACER DETECTED!\n\n" ANSI_COLOR_RESET) ;
-    }
+      printf(ANSI_COLOR_MAGENTA "\n\nSPACER DETECTED!\n\n" ANSI_COLOR_RESET);
+      if (strlen(tokenValue) > 0) {
+       finalizeToken(tokenValue, currentState);
 
-    /*
-     * when the machine returns to the initial state, it means
-     * that the token is finished and we need to start another one
-     */
-    if (getCurrentState() == INITIAL_STATE) {
-      Token *token = malloc(sizeof(Token));
-      token->value = tokenValue;
-      token->type = getTokenType(getCurrentState());
-      onGetToken(token);
+       // reseting the token value
+       tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
 
-      // reseting the token value
-      tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
-
-      // coming back one char so we will read it again
-      fseek(fp, -1 * sizeof(char), SEEK_CUR); 
-
+      }
     } else {
-      addCharToToken(tokenValue, currentChar);
-      printf("%s\n", tokenValue);
+
+      processChar(currentChar);
+
+      /*
+       * when the machine returns to the initial state, it means
+       * that the token is finished and we need to start another one
+       */
+      if (getCurrentState() == INITIAL_STATE) {
+
+        finalizeToken(tokenValue, currentState);
+
+        // reseting the token value
+        tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
+
+        // coming back one char so we will read it again
+        fseek(fp, -1 * sizeof(char), SEEK_CUR); 
+
+      } else {
+        addCharToToken(tokenValue, currentChar);
+        currentState = getCurrentState();
+        printf("%s\n", tokenValue);
+      }
+
+    
     }
 
+    
     currentChar = fgetc(fp);
   }
 
