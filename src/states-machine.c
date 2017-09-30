@@ -51,7 +51,7 @@ char *getStateDescription(State state) {
  * @param {int} a
  */
 void processChar(int a) {
-  State nextState;
+  State nextState = INITIAL_STATE;
 
   D printf("Got the character: \"%c\"\n", a);
 
@@ -92,12 +92,13 @@ void processChar(int a) {
 
   }
 
+  currentState = nextState;
+
   D printf(
     "Transitioned from %s to %s\n",
     getStateDescription(currentState),
     getStateDescription(nextState)
   );
 
-  currentState = nextState;
 
 }

@@ -56,6 +56,13 @@ void checkEqualComparator() {
   assert(getCurrentState(), STATE_Q5);
 }
 
+void checkIdentifierWithComparator() {
+  processChar('a');
+  processChar('b');
+  processChar('=');
+  assert(getCurrentState(), INITIAL_STATE);
+}
+
 
 int main() {
 
@@ -65,6 +72,7 @@ int main() {
   test("Should identify string \"12\" as an integer", checkInteger);
   test("Should identify string \";\" as a semicolon", checkSemicolon);
   test("Should identify string \"==\" as a logic operator", checkEqualComparator);
+  test("Should reset state after finding first \"=\"", checkIdentifierWithComparator);
 
   printf("\n");
   return(0);
