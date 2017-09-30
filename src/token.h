@@ -26,5 +26,5 @@ typedef struct {
   char *value;
 } Token;
 
-char *getTokenTypeDescription(Token *token);
+char *getTokenTypeDescription(TokenType type);
 Token *finalizeToken(char *value, State state);

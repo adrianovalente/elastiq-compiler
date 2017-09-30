@@ -6,8 +6,8 @@
 #include "colors.h"
 #include "boolean.h"
 
-char *getTokenTypeDescription(Token *token) {
-  switch (token->type) {
+char *getTokenTypeDescription(TokenType type) {
+  switch (type) {
     case (IDENTIFIER)              : return "IDENTIFIER";
     case (NUMBER)                  : return "NUMBER";
     case (SEMICOLON)               : return "SEMICOLON";
@@ -20,7 +20,6 @@ char *getTokenTypeDescription(Token *token) {
 
 bool isReservedWord(char *str) {
   int i;
-
   for (i = 0; i < NUMBER_OF_RESERVER_WORDS; i++) {
     if (strcmp(RESERVED_WORDS[i], str) == 0) {
       return true;
@@ -66,7 +65,7 @@ Token *finalizeToken(char *value, State state) {
   // TODO implement interface with compiler main file
   printf(
     ANSI_COLOR_YELLOW "Got token with type: %s, value: \"%s\"\n" ANSI_COLOR_RESET,
-    getTokenTypeDescription(token),
+    getTokenTypeDescription(token->type),
     token->value
   );
 }
