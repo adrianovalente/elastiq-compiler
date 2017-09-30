@@ -7,8 +7,10 @@
 #include "token.h"
 #include "colors.h"
 
+static const int MAX_TOKEN_VALUE = 64;
+
 TokenType getTokenType(State state) {
-  return (TokenType)0;
+  return (TokenType)0; // TODO IMPLEMENT
 }
 
 void onGetToken(Token *token) {
@@ -21,28 +23,38 @@ void onGetToken(Token *token) {
 
 void addCharToToken(char *str, char a) {
   int len = strlen(str);
+  if (len + 1 == MAX_TOKEN_VALUE) {
+    printf(ANSI_COLOR_RED "Token has reached max length: %s" ANSI_COLOR_RESET, str) ;
+    exit(EXIT_FAILURE);
+  }
   str[len] = a;
   str[len + 1] = '\0';
 }
 
-void getTokens() {
-  FILE *fp = fopen("/Users/drico/Desktop/hello.el", "r");
-  char currentChar;
-  char nextChar;
-  bool _finished = false;
+bool isSpacer(char a) {
+  if (a == '\n') return true;
+  if (a == ' ') return true;
+
+  else return false;
+}
+
+void getTokens() { FILE *fp = fopen("/Users/drico/Desktop/hello.el", "r"); char currentChar;
 
   if (fp == NULL) {
     printf(ANSI_COLOR_RED  "Did not find file!" ANSI_COLOR_RESET);
     exit(EXIT_FAILURE);
   }
 
-  char tokenValue[] = "";
+  char *tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
+  currentChar = fgetc(fp);
 
-  while (!_finished) {
-    nextChar = fgetc(fp);
-    printf("next char is %c\n", nextChar);
+  while (currentChar != EOF) {
+    printf("next char is %c\n", currentChar);
+    processChar(currentChar);
 
-    processChar(nextChar);
+    if (isSpacer(currentChar)) {
+      printf(ANSI_COLOR_MAGENTA "\n\nSPACER DETECTED!\n\n" ANSI_COLOR_RESET) ;
+    }
 
     /*
      * when the machine returns to the initial state, it means
@@ -53,13 +65,19 @@ void getTokens() {
       token->value = tokenValue;
       token->type = getTokenType(getCurrentState());
       onGetToken(token);
+
+      // reseting the token value
+      tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
+
+      // coming back one char so we will read it again
+      fseek(fp, -1 * sizeof(char), SEEK_CUR); 
+
     } else {
-      addCharToToken(tokenValue, nextChar);
-        printf("%s\n", tokenValue);
+      addCharToToken(tokenValue, currentChar);
+      printf("%s\n", tokenValue);
     }
 
-    if (nextChar == EOF) _finished = true;
+    currentChar = fgetc(fp);
   }
-
 
 }

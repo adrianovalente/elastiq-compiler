@@ -9,3 +9,13 @@ int main() {
   printf("\n");
   return 0;
 }
+
+void checkIsSpacer() {
+  isSpacer(' ');
+}
+
+
+void test(char *testDescription, void (*f)()) {
+  (*f)();
+  printf(ANSI_COLOR_GREEN "    ✓ " ANSI_COLOR_RESET "%s\n", testDescription);
+}

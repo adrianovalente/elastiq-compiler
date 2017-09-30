@@ -80,7 +80,6 @@ void processChar(int a) {
 
     case STATE_Q4:
       if (a == '=') nextState = STATE_Q5;
-      else nextState = ERROR_STATE;
       break;
 
     case ERROR_STATE:
