@@ -7,26 +7,6 @@
 #include "token.h"
 #include "colors.h"
 
-static const int MAX_TOKEN_VALUE = 64;
-
-TokenType getTokenType(State state) {
-  return (TokenType)0; // TODO IMPLEMENT
-}
-
-void finalizeToken(char *value, State state) {
-  Token *token = malloc(sizeof(Token));
-  token->value = value;
-  token->type = getTokenType(state);
-  
-  // TODO implement interface with compiler main file
-  printf(
-    ANSI_COLOR_YELLOW "\n\nGot token with type: %s, value: %s\n\n" ANSI_COLOR_RESET,
-    getTokenTypeDescription(token),
-    token->value
-  );
-}
-
-
 void addCharToString(char *str, char a) {
   int len = strlen(str);
   if (len + 1 == MAX_TOKEN_VALUE) {
@@ -56,15 +36,13 @@ void getTokens() {
 
   while (currentChar != EOF) {
 
-    printf("next char is %d\n", currentChar);
-
     if (isSpacer(currentChar)) {
-      printf(ANSI_COLOR_MAGENTA "\n\nSPACER DETECTED!\n\n" ANSI_COLOR_RESET);
       if (strlen(tokenValue) > 0) {
        finalizeToken(tokenValue, currentState);
 
        // reseting the token value
        tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
+       resetStateMachine();
 
       }
     } else {
@@ -88,12 +66,9 @@ void getTokens() {
       } else {
         addCharToString(tokenValue, currentChar);
         currentState = getCurrentState();
-        printf("%s\n", tokenValue);
       }
-
     
     }
-
     
     currentChar = fgetc(fp);
   }

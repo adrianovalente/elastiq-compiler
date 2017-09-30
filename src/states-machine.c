@@ -78,16 +78,20 @@ void processChar(int a) {
 
       break;
 
+
     case STATE_Q4:
       if (a == '=') nextState = STATE_Q5;
+      break;
+
+    case STATE_Q6:
+      if (a == '=') nextState = STATE_Q7;
       break;
 
     case ERROR_STATE:
       nextState = ERROR_STATE;
       break;
 
-    default:
-      nextState = ERROR_STATE;
+    default: break;
 
   }
 
