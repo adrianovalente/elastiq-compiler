@@ -81,11 +81,4 @@ Token *finalizeToken(char *value, State state) {
   token->type = getTokenType(state, value);
 
   return token;
-
-  // TODO implement interface with compiler main file
-  printf(
-    ANSI_COLOR_YELLOW "Got token with type: %s, value: \"%s\"\n" ANSI_COLOR_RESET,
-    getTokenTypeDescription(token->type),
-    token->value
-  );
 }
