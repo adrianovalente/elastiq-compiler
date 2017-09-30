@@ -92,11 +92,11 @@ void processChar(int a) {
 
   }
 
-  currentState = nextState;
-
   D printf(
-    "Transitioned from %s to %s\n",
+    "Transitioning from %s to %s\n",
     getStateDescription(currentState),
     getStateDescription(nextState)
   );
+
+  currentState = nextState;
 }
