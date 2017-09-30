@@ -1,3 +1,5 @@
+#include "states-machine.h"
+
 static const int MAX_TOKEN_VALUE = 64;
 
 static const int NUMBER_OF_RESERVER_WORDS = 5;
@@ -25,4 +27,4 @@ typedef struct {
 } Token;
 
 char *getTokenTypeDescription(Token *token);
-void finalizeToken(char *value, State state);
+Token *finalizeToken(char *value, State state);

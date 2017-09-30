@@ -3,14 +3,13 @@
 #include <stdio.h>
 
 #include "boolean.h"
-#include "states-machine.h"
 #include "token.h"
 #include "colors.h"
 
 void addCharToString(char *str, char a) {
   int len = strlen(str);
   if (len + 1 == MAX_TOKEN_VALUE) {
-    printf(ANSI_COLOR_RED "Token has reached max length: %s" ANSI_COLOR_RESET, str) ;
+    printf(ANSI_COLOR_RED "Token has reached max length: %s" ANSI_COLOR_RESET, str);
     exit(EXIT_FAILURE);
   }
   str[len] = a;
@@ -21,7 +20,7 @@ bool isSpacer(char a) {
   return (bool)(a == '\n' || a == ' ');
 }
 
-void getTokens(char *path) {
+void getTokens(char *path, void (*cb)(Token *token)) {
   FILE *fp = fopen(path, "r");
   char currentChar;
   State currentState;
@@ -38,7 +37,7 @@ void getTokens(char *path) {
 
     if (isSpacer(currentChar)) {
       if (strlen(tokenValue) > 0) {
-       finalizeToken(tokenValue, currentState);
+       cb(finalizeToken(tokenValue, currentState));
 
        // reseting the token value
        tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
@@ -55,7 +54,7 @@ void getTokens(char *path) {
        */
       if (getCurrentState() == INITIAL_STATE) {
 
-        finalizeToken(tokenValue, currentState);
+        cb(finalizeToken(tokenValue, currentState));
 
         // reseting the token value
         tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));

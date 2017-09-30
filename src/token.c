@@ -2,7 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "states-machine.h"
 #include "token.h"
 #include "colors.h"
 #include "boolean.h"
@@ -57,10 +56,12 @@ TokenType getTokenType(State state, char *tokenValue) {
 }
 
 
-void finalizeToken(char *value, State state) {
+Token *finalizeToken(char *value, State state) {
   Token *token = malloc(sizeof(Token));
   token->value = value;
   token->type = getTokenType(state, value);
+
+  return token;
 
   // TODO implement interface with compiler main file
   printf(
