@@ -45,6 +45,17 @@ void checkInteger() {
   assert(getCurrentState(), STATE_Q2);
 }
 
+void checkSemicolon() {
+  processChar(';');
+  assert(getCurrentState(), STATE_Q3);
+}
+
+void checkEqualComparator() {
+  processChar('=');
+  processChar('=');
+  assert(getCurrentState(), STATE_Q5);
+}
+
 
 int main() {
 
@@ -52,6 +63,8 @@ int main() {
 
   test("Should identify string \"hello\" as an identifier", checkIdentifier);
   test("Should identify string \"12\" as an integer", checkInteger);
+  test("Should identify string \";\" as a semicolon", checkSemicolon);
+  test("Should identify string \"==\" as a logic operator", checkEqualComparator);
 
   printf("\n");
   return(0);
