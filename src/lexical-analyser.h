@@ -1,4 +1,3 @@
 #include "boolean.h"
 
-void getTokens();
-bool isSpacer(char a);
+void getTokens(char *path);

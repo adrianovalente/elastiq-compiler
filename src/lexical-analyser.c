@@ -21,8 +21,8 @@ bool isSpacer(char a) {
   return (bool)(a == '\n' || a == ' ');
 }
 
-void getTokens() {
-  FILE *fp = fopen("/Users/drico/Desktop/hello.el", "r");
+void getTokens(char *path) {
+  FILE *fp = fopen(path, "r");
   char currentChar;
   State currentState;
 

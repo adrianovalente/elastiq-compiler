@@ -3,17 +3,13 @@
 #include "colors.h"
 #include "lexical-analyser.h"
 
-int main() {
+int main(int argc, char *argv[]) {
+  char *filePath = argv[1];
   printf(ANSI_COLOR_BLUE "\n  LEXICAL ANALYSER\n" ANSI_COLOR_RESET);
-  getTokens();
+  getTokens(filePath);
   printf("\n");
   return 0;
 }
-
-void checkIsSpacer() {
-  isSpacer(' ');
-}
-
 
 void test(char *testDescription, void (*f)()) {
   (*f)();
