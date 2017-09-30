@@ -27,7 +27,7 @@ void finalizeToken(char *value, State state) {
 }
 
 
-void addCharToToken(char *str, char a) {
+void addCharToString(char *str, char a) {
   int len = strlen(str);
   if (len + 1 == MAX_TOKEN_VALUE) {
     printf(ANSI_COLOR_RED "Token has reached max length: %s" ANSI_COLOR_RESET, str) ;
@@ -38,10 +38,7 @@ void addCharToToken(char *str, char a) {
 }
 
 bool isSpacer(char a) {
-  if (a == '\n') return true;
-  if (a == ' ') return true;
-
-  else return false;
+  return (bool)(a == '\n' || a == ' ');
 }
 
 void getTokens() {
@@ -89,7 +86,7 @@ void getTokens() {
         fseek(fp, -1 * sizeof(char), SEEK_CUR); 
 
       } else {
-        addCharToToken(tokenValue, currentChar);
+        addCharToString(tokenValue, currentChar);
         currentState = getCurrentState();
         printf("%s\n", tokenValue);
       }

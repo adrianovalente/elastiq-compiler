@@ -1,6 +1,6 @@
 <p align="center">
 <img src="https://user-images.githubusercontent.com/8186616/30614558-44fa0604-9d62-11e7-8515-7e3314535a7c.png"/>
-<h2 align="center">Hello <s>Elastiq</s> World.</h2>
+<h2 align="center">Hello <s>World</s> Elastiq.</h2>
 </p>
 
 > elastiq is a flexible and simple imperative programming language you can use to build great applications
