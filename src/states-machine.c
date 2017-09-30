@@ -99,6 +99,4 @@ void processChar(int a) {
     getStateDescription(currentState),
     getStateDescription(nextState)
   );
-
-
 }
