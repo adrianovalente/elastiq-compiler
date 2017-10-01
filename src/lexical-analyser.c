@@ -22,6 +22,9 @@ void appendCharToString(char *str, char a) {
   str[len + 1] = '\0';
 }
 
+/**
+ * We defined as spacer characters the space and the line break.
+ */
 bool isSpacer(char a) {
   return (bool)(a == '\n' || a == ' ');
 }
