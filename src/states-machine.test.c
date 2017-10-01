@@ -45,13 +45,34 @@ void checkInteger() {
   assert(getCurrentState(), STATE_Q2);
 }
 
+void checkSemicolon() {
+  processChar(';');
+  assert(getCurrentState(), STATE_Q3);
+}
+
+void checkEqualComparator() {
+  processChar('=');
+  processChar('=');
+  assert(getCurrentState(), STATE_Q5);
+}
+
+void checkIdentifierWithComparator() {
+  processChar('a');
+  processChar('b');
+  processChar('=');
+  assert(getCurrentState(), INITIAL_STATE);
+}
+
 
 int main() {
 
   printf(ANSI_COLOR_BLUE "\n  STATES MACHINE\n" ANSI_COLOR_RESET);
 
-  test("Should identify string \"hello\" as an identifier", checkIdentifier);
-  test("Should identify string \"12\" as an integer", checkInteger);
+  test("Should end execution of string string \"hello\" in STATE_Q1", checkIdentifier);
+  test("Should end execution of string \"12\" in STATE_Q2", checkInteger);
+  test("Should end execution of string \";\" in STATE_Q3", checkSemicolon);
+  test("Should end execution of string \"==\" ins STATE_Q5", checkEqualComparator);
+  test("Should reset state after finding first \"=\"", checkIdentifierWithComparator);
 
   printf("\n");
   return(0);
