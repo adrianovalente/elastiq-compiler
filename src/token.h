@@ -1,3 +1,6 @@
+#ifndef TOKEN_H
+#define TOKEN_H 1
+
 #include "states-machine.h"
 
 static const int MAX_TOKEN_VALUE = 64;
@@ -28,3 +31,5 @@ typedef struct {
 
 char *getTokenTypeDescription(TokenType type);
 Token *finalizeToken(char *value, State state);
+
+#endif
