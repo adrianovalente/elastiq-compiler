@@ -8,18 +8,20 @@ letra = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | 
 numero = {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"} numero | {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}.
 
 id = letra { letra | numero }.
-
 booleano = "#t" | "#f".
+
+operador = operador_booleano | operador_comparacao | operador_aritmetico.
+
 operador_booleano = "OR" | "AND".
 operador_comparacao = ">" | ">=" | "<" | "<=" | "==" | "!=".
 operador_aritmetico = "+" | "-" | "/" | "%" | "*".
-expressao_aritmetica = numero | id | expressao_aritmetica operador_aritmetico expressao_aritmetica | "("expressao_aritmetica")".
-expressao_booleano = booleano | id | expressao_booleano operador_booleano expressao_booleano | expressao_aritmetica operador_comparacao expressao_aritmetica.
-expressao = expressao_booleano | expressao_aritmetica.
+
+expressao = expressao_ { operador expressao_ }.
+expressao_ = numero | id | booleano | "(" expressao ")".
 
 chamada = "CALL" id ";".
 atribuicao = id ":=" expressao ";".
-condicional = "IF" expressao_booleano "THEN" comandos "END" "IF" ";".
-iterativo = "WHILE" expressao_booleano "LOOP" comandos "END" "LOOP" ";".
+condicional = "IF" expressao "THEN" comandos "END" "IF" ";".
+iterativo = "WHILE" expressao "LOOP" comandos "END" "LOOP" ";".
 saida = "OUTPUT" id | "OUTPUT" expressao ";".
 entrada = "INPUT" id {"," id} ";".
