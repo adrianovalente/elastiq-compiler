@@ -1,0 +1,35 @@
+programa = "PROGRAM" bloco "END PROGRAM;".
+bloco = [ declaracoes ] [ funcoes ] comandos.
+declaracoes = "VAR" id {"," id}";".
+funcoes = "FUNCTION" id "BEGIN" bloco "END FUNCTION;".
+comandos = (atribuicao | condicional | entrada | saida | iterativo | chamada) {";" comandos}.
+
+letra = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" 
+      | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B"
+      | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P"
+      | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z".
+numero = {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"} numero
+        | {"0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"}.
+
+id = letra { letra | numero }.
+
+booleano = "#t" | "#f".
+operador_booleano = "OR" | "AND".
+operador_comparacao = ">" | ">=" | "<" | "<=" | "==" | "!=".
+operador_aritmetico = "+" | "-" | "/" | "%" | "*".
+expressao_aritmetica = numero 
+                     | id 
+                     | expressao_aritmetica operador_aritmetico expressao_aritmetica
+                     | "("expressao_aritmetica")".
+expressao_booleano = booleano 
+                   | id
+                   | expressao_booleano operador_booleano expressao_booleano
+                   | expressao_aritmetica operador_comparacao expressao_aritmetica.
+expressao = expressao_booleano | expressao_aritmetica.
+
+chamda = "CALL" id ";".
+atribuicao = id ":=" expressao ";".
+condicional = "IF" expressao_booleano "THEN" comando "END IF;".
+iterativo = "WHILE" expressao_booleano "LOOP" comandos "END LOOP;".
+saida = "OUTPUT" id | "OUTPUT" expressao ";".
+entrada = "INPUT" id {"," id} ";".
