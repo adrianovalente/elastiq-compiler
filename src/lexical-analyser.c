@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "boolean.h"
+#include "utils/boolean.h"
 #include "token.h"
-#include "colors.h"
+#include "utils/colors.h"
 
 /**
  * Adds a char to the end of a string.

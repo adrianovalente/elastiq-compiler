@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "states-machine.h"
-#include "colors.h"
+#include "utils/colors.h"
 
 /*
  * Resets the machine state before each test.

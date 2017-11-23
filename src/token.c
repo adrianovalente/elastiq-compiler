@@ -3,8 +3,8 @@
 #include <stdlib.h>
 
 #include "token.h"
-#include "colors.h"
-#include "boolean.h"
+#include "utils/colors.h"
+#include "utils/boolean.h"
 
 /**
  * Returns the description (as a string) for a given token type.

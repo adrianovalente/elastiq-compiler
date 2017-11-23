@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "colors.h"
+#include "utils/colors.h"
 #include "token.h"
 #include "lexical-analyser.h"
 
