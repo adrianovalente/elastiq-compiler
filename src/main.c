@@ -1,10 +1,11 @@
 #include <stdio.h>
 
 #include "utils/colors.h"
-#include "token.h"
 #include "lexical-analyser.h"
+#include "syntatic-analyser.h"
 
 void onGetToken(Token *token) {
+  processToken(token)
   printf(
     ANSI_COLOR_YELLOW "Got token with type: %s, value: \"%s\"\n" ANSI_COLOR_RESET,
     getTokenTypeDescription(token->type),
