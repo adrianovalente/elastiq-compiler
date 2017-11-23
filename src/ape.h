@@ -1,9 +1,8 @@
 #ifndef APE_H
 #define APE_H 1
 
-#include "../main.h"
-#include "../lib/utarray.h"
-#include "../lib/uthash.h"
+#include "lib/utarray.h"
+#include "lib/uthash.h"
 
 typedef struct {
 

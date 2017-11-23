@@ -1,1 +1,1 @@
-APE *ape create_ape();
+APE *create_ape();
