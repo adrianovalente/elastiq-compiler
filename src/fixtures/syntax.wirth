@@ -1,7 +1,7 @@
-programa = "PROGRAM" bloco "END PROGRAM;".
+PROGRAMA = "PROGRAM" bloco "END" "PROGRAM" ";".
 bloco = [ declaracoes ] [ funcoes ] comandos.
 declaracoes = "VAR" id {"," id}";".
-funcoes = "FUNCTION" id "BEGIN" bloco "END FUNCTION;".
+funcoes = "FUNCTION" id "BEGIN" bloco "END" "FUNCTION" ";".
 comandos = (atribuicao | condicional | entrada | saida | iterativo | chamada) {";" comandos}.
 
 letra = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "l" | "m" | "n" | "o" | "p" | "q" | "r" | "s" | "t" | "u" | "v" | "w" | "x" | "y" | "z" | "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R" | "S" | "T" | "U" | "V" | "W" | "X" | "Y" | "Z".
@@ -19,7 +19,7 @@ expressao = expressao_booleano | expressao_aritmetica.
 
 chamada = "CALL" id ";".
 atribuicao = id ":=" expressao ";".
-condicional = "IF" expressao_booleano "THEN" comando "END IF;".
-iterativo = "WHILE" expressao_booleano "LOOP" comandos "END LOOP;".
+condicional = "IF" expressao_booleano "THEN" comandos "END" "IF" ";".
+iterativo = "WHILE" expressao_booleano "LOOP" comandos "END" "LOOP" ";".
 saida = "OUTPUT" id | "OUTPUT" expressao ";".
 entrada = "INPUT" id {"," id} ";".
