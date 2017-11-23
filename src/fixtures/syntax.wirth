@@ -23,5 +23,5 @@ chamada = "CALL" id ";".
 atribuicao = id ":=" expressao ";".
 condicional = "IF" expressao "THEN" comandos "END" "IF" ";".
 iterativo = "WHILE" expressao "LOOP" comandos "END" "LOOP" ";".
-saida = "OUTPUT" id | "OUTPUT" expressao ";".
+saida = "OUTPUT" id ";".
 entrada = "INPUT" id {"," id} ";".
