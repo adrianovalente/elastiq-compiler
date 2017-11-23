@@ -17,7 +17,7 @@ expressao_aritmetica = numero | id | expressao_aritmetica operador_aritmetico ex
 expressao_booleano = booleano | id | expressao_booleano operador_booleano expressao_booleano | expressao_aritmetica operador_comparacao expressao_aritmetica.
 expressao = expressao_booleano | expressao_aritmetica.
 
-chamda = "CALL" id ";".
+chamada = "CALL" id ";".
 atribuicao = id ":=" expressao ";".
 condicional = "IF" expressao_booleano "THEN" comando "END IF;".
 iterativo = "WHILE" expressao_booleano "LOOP" comandos "END LOOP;".
