@@ -1,5 +1,12 @@
+/**
+ * This file was generated using Roro's parser
+ * which parses language description in Wirth Notation into a Stack Automata in C.
+ * https://github.com/rogerioyuuki/poli-github/tree/master/compiladores/entrega3/syntax
+ *
+ * Thanks [Roro](https://github.com/rogerioyuuki)!
+ */
+
 #include "ape.h"
-//#include "../main.h"
 #include "../lib/utarray.h"
 #include "../lib/uthash.h"
 #include <stdio.h>

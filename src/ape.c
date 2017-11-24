@@ -1,3 +1,10 @@
+/**
+ * This file is adapted from Roro's original APE that can be found on github
+ * https://github.com/rogerioyuuki/poli-github/blob/master/compiladores/entrega3/syntax/ape.c
+ *
+ * #thanks @Roro
+ */
+
 #include "ape.h"
 #include "utils/colors.h"
 #include "../lib/utarray.h"
