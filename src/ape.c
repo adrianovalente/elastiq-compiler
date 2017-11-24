@@ -76,14 +76,11 @@ TransicaoChamada * busca_submaquina_possivel(Automato *automato, Token *token) {
                 chaveBusca = "id";
                 break;
             case NUMBER:
-                chaveBusca = "number";
+                chaveBusca = "numero";
                 break;
             default:
                 chaveBusca = token->value;
         }
-
-        printf("chavebusca is %s", chaveBusca);
-
 
         HASH_FIND_STR(estado->chamadas, chaveBusca, chamada);
 
@@ -168,7 +165,7 @@ bool consome_token(APE *ape, Token *token) {
     /* Tenta realizar transição */
     Transicao *transicao = busca_transicao_possivel(automato, token);
     if (transicao != NULL) {
-        printf(ANSI_COLOR_YELLOW "[%s] Consumindo token %s e indo para estado %d" ANSI_COLOR_RESET,
+        printf(ANSI_COLOR_YELLOW "[%s] Consuming token %s and going to state %d\n" ANSI_COLOR_RESET,
           automato->title, token->value, transicao->estadoResultado);
         /* Realiza a transição */
         automato->estado = transicao->estadoResultado;
@@ -178,18 +175,24 @@ bool consome_token(APE *ape, Token *token) {
     /* Busca chamada de submáquina */
     TransicaoChamada *chamada = busca_submaquina_possivel(automato, token);
     if (chamada != NULL) {
-        printf("[%s] Entrando na submáquina %s", automato->title, chamada->submaquina);
 
         /* Guarda estado de retorno */
         automato->estado = chamada->estadoResultado;
 
         /* Empilha automato e consome token novamente */
-        if (strcmp(chamada->submaquina, "IDENTIFICADOR") != 0
+        if (strcmp(chamada->submaquina, "id") != 0
             &&
-            strcmp(chamada->submaquina, "NUMERO") != 0) {
+            strcmp(chamada->submaquina, "numero") != 0) {
+
+            printf(ANSI_COLOR_MAGENTA "[%s] Entering submachine %s\n" ANSI_COLOR_RESET,
+              automato->title, chamada->submaquina);
+
             /* Não empilha identificador nem número, eles estao no lexico */
             empilha_automato(ape, busca_novo_automato(ape, chamada->submaquina));
             consome_token(ape, token);
+        } else {
+          printf(ANSI_COLOR_YELLOW "[%s] Consuming token %s with value %s \n" ANSI_COLOR_RESET,
+            automato->title, chamada-> submaquina, token->value);
         }
 
         return true;
