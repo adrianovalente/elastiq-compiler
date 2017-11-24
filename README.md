@@ -64,5 +64,8 @@ dist/lexical /path/to/your/file.el
 
 ![image](http://g.recordit.co/GNq28A5OBz.gif)
 
+## Special Thanks
+Special thanks to [Roro](https://github.com/rogerioyuuki), who helped us with his [Automata Generator](https://github.com/rogerioyuuki/poli-github/blob/master/compiladores/entrega3/syntax/), a Python Script that writes down the C code for a Stack Automata from any With Notation.
+
 ## Contributing and Testing
 Please feel free to open a pull request or open a issue. There are automated tests you can run with `make test` (or, if you are a js-fanboy like me, you can also `npm test` or `npm run test:watch`).
