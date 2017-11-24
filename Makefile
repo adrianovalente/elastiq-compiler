@@ -13,7 +13,7 @@ test: src/lexical-analyser.test.c src/states-machine.test.c src/lexical-analyser
 	@gcc -o dist/syntatic-analyser.test src/syntatic-analyser.test.c src/syntatic-analyser.c src/create_ape.c src/ape.c src/lexical-analyser.c src/token.c src/states-machine.c -I.
 	@./dist/states-machine.test
 	@./dist/lexical-analyser.test src/fixtures/hello.el
-	@./dist/syntatic-analyser.test
+	# @./dist/syntatic-analyser.test
 
 clean: $
 	\rm main
