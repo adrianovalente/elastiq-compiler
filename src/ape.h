@@ -1,6 +1,9 @@
 #ifndef APE_H
 #define APE_H 1
 
+#include "utils/boolean.h"
+#include "token.h"
+
 #include "../lib/utarray.h"
 #include "../lib/uthash.h"
 

@@ -7,5 +7,6 @@
 #include "create_ape.h"
 
 bool processToken(Token *token);
+bool automataIsValid();
 
 #endif

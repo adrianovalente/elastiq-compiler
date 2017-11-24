@@ -1,5 +1,5 @@
 #include "ape.h"
-#include "../main.h"
+#include "utils/colors.h"
 #include "../lib/utarray.h"
 #include "../lib/uthash.h"
 #include <stdio.h>
@@ -47,10 +47,6 @@ void free_ape(APE *ape) {
     utarray_free(ape->pilha);
 }
 
-void semantico_tbd() {
-    printf("TODO \n");
-}
-
 
 Transicao * busca_transicao_possivel(Automato *automato, Token *token) {
     /* Busca transicoes do estado atual */
@@ -76,15 +72,17 @@ TransicaoChamada * busca_submaquina_possivel(Automato *automato, Token *token) {
         const char *chaveBusca;
 
         switch (token->type) {
-            case IDENTIFICADOR:
-                chaveBusca = "IDENTIFICADOR";
+            case IDENTIFIER:
+                chaveBusca = "id";
                 break;
-            case NUMERO:
-                chaveBusca = "NUMERO";
+            case NUMBER:
+                chaveBusca = "number";
                 break;
             default:
                 chaveBusca = token->value;
         }
+
+        printf("chavebusca is %s", chaveBusca);
 
 
         HASH_FIND_STR(estado->chamadas, chaveBusca, chamada);
@@ -154,7 +152,7 @@ Automato *busca_novo_automato(APE *ape, const char *title) {
     Automato *automato, *novoAutomato;
     HASH_FIND_STR(ape->automatos, title, automato);
 
-    novoAutomato = (Automato*)smart_malloc(sizeof(Automato));
+    novoAutomato = malloc(sizeof(Automato));
     novoAutomato->title = automato->title;
     novoAutomato->estado = automato->estado;
 
@@ -170,8 +168,9 @@ bool consome_token(APE *ape, Token *token) {
     /* Tenta realizar transição */
     Transicao *transicao = busca_transicao_possivel(automato, token);
     if (transicao != NULL) {
+        printf(ANSI_COLOR_YELLOW "[%s] Consumindo token %s e indo para estado %d" ANSI_COLOR_RESET,
+          automato->title, token->value, transicao->estadoResultado);
         /* Realiza a transição */
-        semantico_tbd();
         automato->estado = transicao->estadoResultado;
         return true;
     }
@@ -179,8 +178,9 @@ bool consome_token(APE *ape, Token *token) {
     /* Busca chamada de submáquina */
     TransicaoChamada *chamada = busca_submaquina_possivel(automato, token);
     if (chamada != NULL) {
+        printf("[%s] Entrando na submáquina %s", automato->title, chamada->submaquina);
+
         /* Guarda estado de retorno */
-        semantico_tbd();
         automato->estado = chamada->estadoResultado;
 
         /* Empilha automato e consome token novamente */

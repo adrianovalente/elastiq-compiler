@@ -2,9 +2,17 @@
 #include "syntatic-analyser.h"
 #include "create_ape.h"
 
-bool processToken(Token *token) {
-  APE *ape = create_ape();
-  printf("Processing token!");
+APE *_ape = NULL;
+APE *getAutomata() {
+  if (_ape == NULL) _ape = create_ape();
 
-  return true;
+  return _ape;
+}
+
+bool processToken(Token *token) {
+  return consome_token(getAutomata(), token);
+}
+
+bool automataIsValid() {
+  return is_ape_valid(getAutomata());
 }
