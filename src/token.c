@@ -82,3 +82,19 @@ Token *finalizeToken(char *value, State state) {
 
   return token;
 }
+
+/**
+ * A simple Token constructor.
+ *
+ * @param {TokenType} type
+ * @param {string} value
+ *
+ * @returns {Token}
+ */
+Token *generateToken(TokenType type, char *value) {
+  Token *token = malloc(sizeof(Token));
+  token->type = type;
+  token->value = value;
+
+  return token;
+}
