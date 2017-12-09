@@ -4,6 +4,8 @@
 
 int main() {
   printf("Hello tests!\n");
+  initCodeGenerator();
+
   consumeTransition(
     generateToken(RESERVED_WORD, "BEGIN"),
     "my submachine",

@@ -9,7 +9,7 @@ APE *getAutomata() {
   return _ape;
 }
 
-bool processToken(Token *token) {
+CodeGeneratorTransition *processToken(Token *token) {
   return consome_token(getAutomata(), token);
 }
 

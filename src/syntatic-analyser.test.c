@@ -7,7 +7,7 @@ void testToken(TokenType type, char *value, bool shouldBeValid) {
   Token *token = malloc(sizeof(Token));
   token->type = type;
   token->value = value;
-  bool valid = processToken(token);
+  bool valid = processToken(token) != NULL;
   if (shouldBeValid != valid) {
     printf(
       ANSI_COLOR_RED "Assertion Error: Expected APE to be %svalid\n" ANSI_COLOR_RESET,

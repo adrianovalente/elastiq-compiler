@@ -3,6 +3,7 @@
 
 #include "utils/boolean.h"
 #include "token.h"
+#include "./code-generator/code-generator-transition.h"
 
 #include "../lib/utarray.h"
 #include "../lib/uthash.h"
@@ -65,7 +66,7 @@ typedef struct {
 
 APE *create_ape();
 void free_ape(APE *ape);
-bool consome_token(APE *ape, Token *token);
+CodeGeneratorTransition *consome_token(APE *ape, Token *token);
 bool is_ape_valid(APE *ape);
 
 #endif

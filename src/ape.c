@@ -166,7 +166,16 @@ Automato *busca_novo_automato(APE *ape, const char *title) {
     return novoAutomato;
 }
 
-bool consome_token(APE *ape, Token *token) {
+/**
+ * Consumes a token from a stream.
+ *
+ * @param {APE} ape - the stack automata
+ * @param {Token} token
+ *
+ * @returns NULL if there is a syntax error,
+ *       or a CodeGeneratorTransition that describes the available transition.
+ */
+CodeGeneratorTransition *consome_token(APE *ape, Token *token) {
     Automato *automato = ape->automatoAtual;
 
     /* Tenta realizar transição */
@@ -176,7 +185,13 @@ bool consome_token(APE *ape, Token *token) {
           automato->title, token->value, transicao->estadoResultado);
         /* Realiza a transição */
         automato->estado = transicao->estadoResultado;
-        return true;
+
+        /*
+         * TODO verify if casting static const* to const* is ok
+         * https://stackoverflow.com/questions/21422903/passing-const-char-to-parameter-of-type-char-discards-qualifiers
+         */
+        return allocCodeGeneratorTransition(token, (char *)automato->title, transicao->estadoResultado);
+        // return true;
     }
 
     /* Busca chamada de submáquina */
@@ -202,15 +217,16 @@ bool consome_token(APE *ape, Token *token) {
             automato->title, chamada-> submaquina, token->value);
         }
 
-        return true;
+        return allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado);
+        // return true;
     }
 
     /* Se automato estiver em estado final, pode desempilhar e tentar */
     if (is_final(automato)) {
-        if (!desempilha_automato(ape)) return false;
+        if (!desempilha_automato(ape)) return NULL; // false;
         return consome_token(ape, token);
     }
 
     /* Aí vc não ajuda... erro de sintaxe */
-    return false;
+    return NULL; // false;
 }
