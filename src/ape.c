@@ -191,7 +191,6 @@ CodeGeneratorTransition *consome_token(APE *ape, Token *token) {
          * https://stackoverflow.com/questions/21422903/passing-const-char-to-parameter-of-type-char-discards-qualifiers
          */
         return allocCodeGeneratorTransition(token, (char *)automato->title, transicao->estadoResultado);
-        // return true;
     }
 
     /* Busca chamada de submáquina */
@@ -218,15 +217,14 @@ CodeGeneratorTransition *consome_token(APE *ape, Token *token) {
         }
 
         return allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado);
-        // return true;
     }
 
     /* Se automato estiver em estado final, pode desempilhar e tentar */
     if (is_final(automato)) {
-        if (!desempilha_automato(ape)) return NULL; // false;
+        if (!desempilha_automato(ape)) return NULL;
         return consome_token(ape, token);
     }
 
     /* Aí vc não ajuda... erro de sintaxe */
-    return NULL; // false;
+    return NULL;
 }

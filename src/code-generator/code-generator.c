@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "../lib/utarray.h"
+#include "../../lib/utarray.h"
 
 #include "./code-generator.h"
 
