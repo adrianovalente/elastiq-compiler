@@ -10,8 +10,9 @@ int main() {
   consumeTransition(processToken(generateToken(RESERVED_WORD, "PROGRAM")));
   consumeTransition(processToken(generateToken(RESERVED_WORD, "VAR")));
   consumeTransition(processToken(generateToken(IDENTIFIER, "hello")));
-  consumeTransition(processToken(generateToken(SEMICOLON, ",")));
+  consumeTransition(processToken(generateToken(RESERVED_WORD, ",")));
   consumeTransition(processToken(generateToken(IDENTIFIER, "world")));
+  consumeTransition(processToken(generateToken(SEMICOLON, ";")));
 
 
   printCode();

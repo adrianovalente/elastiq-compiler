@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../../lib/utarray.h"
 
+#include "../utils/colors.h"
 #include "./code-generator.h"
 
 UT_array *varsBeingDeclared = NULL;
@@ -8,6 +9,11 @@ UT_array *dataArea, *codeArea;
 char *s;
 
 void consumeTransition(CodeGeneratorTransition *transition) {
+  if (transition == NULL) {
+    printf(ANSI_COLOR_RED "SYNTAX ERROR! 🤷‍♀️\n" ANSI_COLOR_RESET);
+    exit(EXIT_FAILURE);
+  }
+
   char *submachine = transition->submachine;
   char *value = transition->token->value;
   int state = transition->state;
@@ -43,13 +49,13 @@ void consumeTransition(CodeGeneratorTransition *transition) {
 
 void printCode() {
   char **p = NULL;
-  while ( (p=(char**)utarray_next(dataArea ,p))) {
+  while ((p=(char**)utarray_next(dataArea, p))) {
     printf("\n%s",*p);
   }
 
   printf("\n;------- Code Area\n\n");
   
-  while ( (p=(char**)utarray_next(codeArea ,p))) {
+  while ((p=(char**)utarray_next(codeArea, p))) {
     printf("%s\n",*p);
   }
 
