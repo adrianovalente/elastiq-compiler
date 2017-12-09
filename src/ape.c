@@ -175,7 +175,7 @@ Automato *busca_novo_automato(APE *ape, const char *title) {
  *
  * @returns {Boolean} true if the transition is valid.
  */
-CodeGeneratorTransition *consome_token(APE *ape, Token *token, void (*cb)(CodeGeneratorTransition *transition)) {
+bool consome_token(APE *ape, Token *token, void (*cb)(CodeGeneratorTransition *transition)) {
     Automato *automato = ape->automatoAtual;
 
     /* Tenta realizar transição */
@@ -222,12 +222,12 @@ CodeGeneratorTransition *consome_token(APE *ape, Token *token, void (*cb)(CodeGe
 
     /* Se automato estiver em estado final, pode desempilhar e tentar */
     if (is_final(automato)) {
-        if (!desempilha_automato(ape)) return NULL;
+        if (!desempilha_automato(ape)) return false;
 
         cb(allocCodeGeneratorTransition(NULL, (char *)ape->automatoAtual->title, ape->automatoAtual->estado));
         return consome_token(ape, token, cb);
     }
 
     /* Aí vc não ajuda... erro de sintaxe */
-    return NULL;
+    return false;
 }

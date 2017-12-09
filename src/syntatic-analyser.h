@@ -7,7 +7,7 @@
 #include "create_ape.h"
 #include "code-generator/code-generator-transition.h"
 
-CodeGeneratorTransition *processToken(Token *token, void (*cb)(CodeGeneratorTransition *transition));
+bool processToken(Token *token, void (*cb)(CodeGeneratorTransition *transition));
 bool automataIsValid();
 
 #endif

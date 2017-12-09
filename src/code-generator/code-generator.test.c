@@ -3,7 +3,6 @@
 #include "./code-generator.h"
 #include "../syntatic-analyser.h"
 
-void noop() {}
 void onTransition(CodeGeneratorTransition *transition) {
   consumeTransition(transition);
 }
@@ -24,7 +23,6 @@ int main() {
   processToken(generateToken(ATTRIBUTION, ":="), onTransition);
   processToken(generateToken(NUMBER, "5"), onTransition);
   processToken(generateToken(SEMICOLON, ";"), onTransition);
-
 
   printCode();
 
