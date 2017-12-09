@@ -1,4 +1,5 @@
 #include "../token.h"
+#include "./code-generator-transition.h"
 
-void consumeTransition(Token *token, char *submachine, char *state);
+void consumeTransition(CodeGeneratorTransition *transition);
 void initCodeGenerator();

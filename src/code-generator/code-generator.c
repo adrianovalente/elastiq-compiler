@@ -5,8 +5,8 @@
 
 UT_array *dataArea, *codeArea;
 
-void consumeTransition(Token *token, char *submachine, char *state) {
-  printf("Consuming transition: %s %s, Token: %s", submachine, state, token ->value);
+void consumeTransition(CodeGeneratorTransition *transition) {
+  printf("Consuming transition: %s %d, Token: %s", transition->submachine, transition->state, transition->token ->value);
 }
 
 /**
