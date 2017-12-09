@@ -222,12 +222,14 @@ bool consome_token(APE *ape, Token *token, void (*cb)(CodeGeneratorTransition *t
 
     /* Se automato estiver em estado final, pode desempilhar e tentar */
     if (is_final(automato)) {
-        if (!desempilha_automato(ape)) return false;
+        if (!desempilha_automato(ape)) {
+          cb(NULL); return false;
+        }
 
         cb(allocCodeGeneratorTransition(NULL, (char *)ape->automatoAtual->title, ape->automatoAtual->estado));
         return consome_token(ape, token, cb);
     }
 
     /* Aí vc não ajuda... erro de sintaxe */
-    return false;
+    cb(NULL); return false;
 }
