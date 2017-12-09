@@ -3,16 +3,27 @@
 #include "./code-generator.h"
 #include "../syntatic-analyser.h"
 
+void noop() {}
+void onTransition(CodeGeneratorTransition *transition) {
+  consumeTransition(transition);
+}
+
 int main() {
   printf("Hello tests!\n");
   initCodeGenerator();
 
-  consumeTransition(processToken(generateToken(RESERVED_WORD, "PROGRAM")));
-  consumeTransition(processToken(generateToken(RESERVED_WORD, "VAR")));
-  consumeTransition(processToken(generateToken(IDENTIFIER, "hello")));
-  consumeTransition(processToken(generateToken(RESERVED_WORD, ",")));
-  consumeTransition(processToken(generateToken(IDENTIFIER, "world")));
-  consumeTransition(processToken(generateToken(SEMICOLON, ";")));
+  processToken(generateToken(RESERVED_WORD, "PROGRAM"), onTransition);
+  processToken(generateToken(RESERVED_WORD, "VAR"), onTransition);
+  processToken(generateToken(IDENTIFIER, "hello"), onTransition);
+
+  processToken(generateToken(RESERVED_WORD, ","), onTransition);
+  processToken(generateToken(IDENTIFIER, "world"), onTransition);
+  processToken(generateToken(SEMICOLON, ";"), onTransition);
+
+  processToken(generateToken(IDENTIFIER, "hello"), onTransition);
+  processToken(generateToken(ATTRIBUTION, ":="), onTransition);
+  processToken(generateToken(NUMBER, "5"), onTransition);
+  processToken(generateToken(SEMICOLON, ";"), onTransition);
 
 
   printCode();

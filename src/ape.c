@@ -170,21 +170,17 @@ Automato *busca_novo_automato(APE *ape, const char *title) {
  * Consumes a token from a stream.
  *
  * @param {APE} ape - the stack automata
- * @param {Token} token
+ * @param {Token} token - the token to process
+ * @param {function} cb - a function called when a transition is done
  *
- * @returns NULL if there is a syntax error,
- *       or a CodeGeneratorTransition that describes the available transition.
+ * @returns {Boolean} true if the transition is valid.
  */
-CodeGeneratorTransition *consome_token(APE *ape, Token *token) {
+CodeGeneratorTransition *consome_token(APE *ape, Token *token, void (*cb)(CodeGeneratorTransition *transition)) {
     Automato *automato = ape->automatoAtual;
 
     /* Tenta realizar transição */
     Transicao *transicao = busca_transicao_possivel(automato, token);
     if (transicao != NULL) {
-      /*
-        printf(ANSI_COLOR_YELLOW "[%s] Consuming token %s and going to state %d\n" ANSI_COLOR_RESET,
-          automato->title, token->value, transicao->estadoResultado);
-      */
         /* Realiza a transição */
         automato->estado = transicao->estadoResultado;
 
@@ -192,7 +188,8 @@ CodeGeneratorTransition *consome_token(APE *ape, Token *token) {
          * TODO verify if casting static const* to const* is ok
          * https://stackoverflow.com/questions/21422903/passing-const-char-to-parameter-of-type-char-discards-qualifiers
          */
-        return allocCodeGeneratorTransition(token, (char *)automato->title, transicao->estadoResultado);
+        cb(allocCodeGeneratorTransition(token, (char *)automato->title, transicao->estadoResultado));
+        return true;
     }
 
     /* Busca chamada de submáquina */
@@ -202,34 +199,33 @@ CodeGeneratorTransition *consome_token(APE *ape, Token *token) {
         /* Guarda estado de retorno */
         automato->estado = chamada->estadoResultado;
 
-        /* Empilha automato e consome token novamente */
+        /* Não empilha identificador nem número, eles estao no lexico */
         if (strcmp(chamada->submaquina, "id") != 0
             &&
             strcmp(chamada->submaquina, "numero") != 0) {
 
-            /*
-            printf(ANSI_COLOR_MAGENTA "[%s] Entering submachine %s\n" ANSI_COLOR_RESET,
-              automato->title, chamada->submaquina);
-            */
-
-            /* Não empilha identificador nem número, eles estao no lexico */
+            /* Empilha automato e consome token novamente */
             empilha_automato(ape, busca_novo_automato(ape, chamada->submaquina));
-            return consome_token(ape, token);
+
+            cb(allocCodeGeneratorTransition(NULL, (char *)chamada->submaquina, chamada->estadoResultado));
+            return consome_token(ape, token, cb);
         } else {
-          /*
-          printf(ANSI_COLOR_YELLOW "[%s] Consuming token %s with value %s \n" ANSI_COLOR_RESET,
-            automato->title, chamada-> submaquina, token->value);
-          */
-        return allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado);
+
+          /* Se é um número ou identificador, o token pode ser consumido instantanaemaente */
+          cb(allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado));
+          return true;
         }
 
-        return allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado);
+        // TODO I believe this line is not necesary o_O
+        // return allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado);
     }
 
     /* Se automato estiver em estado final, pode desempilhar e tentar */
     if (is_final(automato)) {
         if (!desempilha_automato(ape)) return NULL;
-        return consome_token(ape, token);
+
+        cb(allocCodeGeneratorTransition(NULL, (char *)ape->automatoAtual->title, ape->automatoAtual->estado));
+        return consome_token(ape, token, cb);
     }
 
     /* Aí vc não ajuda... erro de sintaxe */

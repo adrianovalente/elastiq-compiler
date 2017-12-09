@@ -15,7 +15,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
   }
 
   char *submachine = transition->submachine;
-  char *value = transition->token->value;
+  char *value = transition->token == NULL ? "---" : transition->token->value;
   int state = transition->state;
 
   printf("Consuming transition: %s %d, Token: %s\n", submachine, state, value);

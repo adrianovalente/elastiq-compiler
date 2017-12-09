@@ -66,7 +66,7 @@ typedef struct {
 
 APE *create_ape();
 void free_ape(APE *ape);
-CodeGeneratorTransition *consome_token(APE *ape, Token *token);
+CodeGeneratorTransition *consome_token(APE *ape, Token *token, void (*cb)(CodeGeneratorTransition *transition));
 bool is_ape_valid(APE *ape);
 
 #endif
