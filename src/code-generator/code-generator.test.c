@@ -8,7 +8,15 @@ int main() {
   initCodeGenerator();
 
   consumeTransition(processToken(generateToken(RESERVED_WORD, "PROGRAM")));
+  consumeTransition(processToken(generateToken(RESERVED_WORD, "VAR")));
+  consumeTransition(processToken(generateToken(IDENTIFIER, "hello")));
+  consumeTransition(processToken(generateToken(SEMICOLON, ",")));
+  consumeTransition(processToken(generateToken(IDENTIFIER, "world")));
 
+
+  printCode();
+
+  printf("\n\nBye! õ/ \n");
   return 0;
 }
 

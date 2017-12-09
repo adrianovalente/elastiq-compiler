@@ -3,3 +3,4 @@
 
 void consumeTransition(CodeGeneratorTransition *transition);
 void initCodeGenerator();
+void printCode();

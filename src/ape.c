@@ -181,8 +181,10 @@ CodeGeneratorTransition *consome_token(APE *ape, Token *token) {
     /* Tenta realizar transição */
     Transicao *transicao = busca_transicao_possivel(automato, token);
     if (transicao != NULL) {
+      /*
         printf(ANSI_COLOR_YELLOW "[%s] Consuming token %s and going to state %d\n" ANSI_COLOR_RESET,
           automato->title, token->value, transicao->estadoResultado);
+      */
         /* Realiza a transição */
         automato->estado = transicao->estadoResultado;
 
@@ -205,15 +207,20 @@ CodeGeneratorTransition *consome_token(APE *ape, Token *token) {
             &&
             strcmp(chamada->submaquina, "numero") != 0) {
 
+            /*
             printf(ANSI_COLOR_MAGENTA "[%s] Entering submachine %s\n" ANSI_COLOR_RESET,
               automato->title, chamada->submaquina);
+            */
 
             /* Não empilha identificador nem número, eles estao no lexico */
             empilha_automato(ape, busca_novo_automato(ape, chamada->submaquina));
-            consome_token(ape, token);
+            return consome_token(ape, token);
         } else {
+          /*
           printf(ANSI_COLOR_YELLOW "[%s] Consuming token %s with value %s \n" ANSI_COLOR_RESET,
             automato->title, chamada-> submaquina, token->value);
+          */
+        return allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado);
         }
 
         return allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado);
