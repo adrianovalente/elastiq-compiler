@@ -85,6 +85,13 @@ void consumeTransition(CodeGeneratorTransition *transition) {
     }
   }
 
+  if (strcmp(submachine, "operador_aritmetico") == 0 && state == 1) {
+    if (isEvaluatingExpression()) {
+      addOperator(transition->token);
+      return;
+    }
+  }
+
   if (strcmp(submachine, "expressao") == 0) {
   }
 

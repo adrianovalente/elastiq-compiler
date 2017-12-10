@@ -33,12 +33,14 @@ int main() {
    */
   processToken(generateToken(SEMICOLON, ";"), onTransition);
 
-  // world = hello + 3;
+  // world = hello + 3 + 2;
   processToken(generateToken(IDENTIFIER, "world"), onTransition);
   processToken(generateToken(ATTRIBUTION, ":="), onTransition);
   processToken(generateToken(IDENTIFIER, "hello"), onTransition);
   processToken(generateToken(ARITHMETIC_OPERATOR, "+"), onTransition);
   processToken(generateToken(NUMBER, "3"), onTransition);
+  processToken(generateToken(ARITHMETIC_OPERATOR, "+"), onTransition);
+  processToken(generateToken(NUMBER, "2"), onTransition);
   processToken(generateToken(SEMICOLON, ";"), onTransition);
 
   printCode();
@@ -46,6 +48,3 @@ int main() {
   printf("\n\nBye! õ/ \n");
   return 0;
 }
-
-
-

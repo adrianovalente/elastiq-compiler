@@ -28,7 +28,7 @@ bool isEvaluatingExpression() {
  * @returns {boolean} true if the operator if of high
  * precedence (i.e., multiplication or division)
  */
-bool isHighPrecedenceOperator(op) {
+bool isHighPrecedenceOperator(char *op) {
   return strcmp(op, "*") == 0 || strcmp(op, "/") == 0;
 }
 
@@ -39,11 +39,8 @@ bool isHighPrecedenceOperator(op) {
 bool shouldPushOperator(Token *token) {
   if (isHighPrecedenceOperator(token->value)) return true;
 
-
-  char *stackTop = utarray_back(operatorsStack);
-  printf("top of stack is %s", stackTop);
-
-  return !isHighPrecedenceOperator(stackTop);
+  char **stackTop = (char **)utarray_back(operatorsStack);
+  return !isHighPrecedenceOperator(*stackTop);
 }
 
 void addOperand(Token *token) {
@@ -72,15 +69,14 @@ void addOperand(Token *token) {
 
 void addOperator(Token *token) {
 
-  return;
-
   if (utarray_len(operatorsStack) == 0) {
-    printf("Printing operator because stack is empty.\n");
-    utarray_push_back(operatorsStack, token->value);
+    printf("Adding operator because stack is empty: %s\n", token->value);
+    utarray_push_back(operatorsStack, &token->value);
   } else {
 
     if (shouldPushOperator(token)) {
-      printf("Should push operator.\n");
+      utarray_push_back(operatorsStack, &token->value);
+      printf("Pushed operator to the stack: %s\n", token->value);
     } else {
       printf("Should not push operator.\n");
     }
