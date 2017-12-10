@@ -9,12 +9,13 @@ void initCode() {
 }
 
 void printCode() {
+  printf("\n\n;------- Data Area");
   char **p = NULL;
   while ((p=(char**)utarray_next(dataArea, p))) {
     printf("\n%s",*p);
   }
 
-  printf("\n;------- Code Area\n\n");
+  printf("\n\n;------- Code Area\n");
 
   while ((p=(char**)utarray_next(codeArea, p))) {
     printf("%s\n",*p);
