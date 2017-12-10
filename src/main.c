@@ -21,10 +21,10 @@ int main(int argc, char *argv[]) {
 
   getTokens(filePath, onGetToken);
 
-  if (!automataIsValid()) {
-    printf(ANSI_COLOR_RED "\nInvalid Program!\n" ANSI_COLOR_RESET);
-    exit(EXIT_FAILURE);
-  } else {
-    printf(ANSI_COLOR_GREEN "\n✓ " ANSI_COLOR_RESET "Program is valid!\n");
-  }
+  /* if (!automataIsValid()) { */
+  /*   printf(ANSI_COLOR_RED "\nInvalid Program!\n" ANSI_COLOR_RESET); */
+  /*   exit(EXIT_FAILURE); */
+  /* } else { */
+  /*   printf(ANSI_COLOR_GREEN "\n✓ " ANSI_COLOR_RESET "Program is valid!\n"); */
+  /* } */
 }

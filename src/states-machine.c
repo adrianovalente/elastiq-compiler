@@ -57,39 +57,41 @@ void processChar(int a) {
 
   switch (currentState) {
     case INITIAL_STATE:
-      if (isalpha(a)) nextState = STATE_Q1;
+      if (isalpha(a) || a == '@') nextState = STATE_Q1;
       else if (isdigit(a)) nextState = STATE_Q2;
-      else if (a == ';') nextState = STATE_Q3;
-      else if (a == '!' || a == '=') nextState = STATE_Q4;
-      else if (a == ':') nextState = STATE_Q6;
-      else if (a == '+' || a == '-'|| a == '*' || a == '/') nextState = STATE_Q8;
+      else if (a == '+') nextState = STATE_Q3;
+      else if (a == '<' || a == '>') nextState = STATE_Q4;
+      else if (a == '-') nextState = STATE_Q5;
+      else if (a == '?') nextState = STATE_Q6;
+      else if (a == '(' || a == ')') nextState = STATE_Q7;
+      else if (a == '#') nextState = STATE_Q8;
       break;
 
-    case STATE_Q1:
-      if (isalpha(a)) nextState = STATE_Q1;
-      else if (isdigit(a)) nextState = STATE_Q1;
-      break;
+    /* case STATE_Q1: */
+    /*   if (isalpha(a)) nextState = STATE_Q1; */
+    /*   else if (isdigit(a)) nextState = STATE_Q1; */
+    /*   break; */
 
-    case STATE_Q2:
-      if (isdigit(a)) nextState = STATE_Q2;
+    /* case STATE_Q2: */
+    /*   if (isdigit(a)) nextState = STATE_Q2; */
 
-      // reading anything but a number is an error in this stage
-      else nextState = ERROR_STATE;
+    /*   // reading anything but a number is an error in this stage */
+    /*   else nextState = ERROR_STATE; */
 
-      break;
+    /*   break; */
 
 
-    case STATE_Q4:
-      if (a == '=') nextState = STATE_Q5;
-      break;
+    /* case STATE_Q4: */
+    /*   if (a == '=') nextState = STATE_Q5; */
+    /*   break; */
 
-    case STATE_Q6:
-      if (a == '=') nextState = STATE_Q7;
-      break;
+    /* case STATE_Q6: */
+    /*   if (a == '=') nextState = STATE_Q7; */
+    /*   break; */
 
-    case ERROR_STATE:
-      nextState = ERROR_STATE;
-      break;
+    /* case ERROR_STATE: */
+    /*   nextState = ERROR_STATE; */
+    /*   break; */
 
     default: break;
 

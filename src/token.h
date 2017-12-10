@@ -5,29 +5,30 @@
 
 static const int MAX_TOKEN_VALUE = 64;
 
-static const int NUMBER_OF_RESERVER_WORDS = 11; // OMG I am sorry for that
-static const char* RESERVED_WORDS[] = {
-  "IF",
-  "BEGIN",
-  "END",
-  "WHILE",
-  "PROGRAM",
-  "FUNCTION",
-  "VAR",
-  "CALL",
-  "OUTPUT",
-  "INPUT",
-  "LOOP"
-};
+/* static const int NUMBER_OF_RESERVER_WORDS = 11; // OMG I am sorry for that */
+/* static const char* RESERVED_WORDS[] = { */
+/*   "IF", */
+/*   "BEGIN", */
+/*   "END", */
+/*   "WHILE", */
+/*   "PROGRAM", */
+/*   "FUNCTION", */
+/*   "VAR", */
+/*   "CALL", */
+/*   "OUTPUT", */
+/*   "INPUT", */
+/*   "LOOP" */
+/* }; */
 
 typedef enum {
   IDENTIFIER,
   NUMBER,
-  SEMICOLON,
-  LOGICAL_COMPARER,
-  ATTRIBUTION,
-  ARITHMETIC_OPERATOR,
-  RESERVED_WORD
+  PUSH,
+  ADD,
+  SUB,
+  CLEAR,
+  SEPARATOR,
+  COMMENT
 } TokenType;
 
 typedef struct {
