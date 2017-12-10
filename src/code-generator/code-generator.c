@@ -5,9 +5,9 @@
 #include "./code-generator.h"
 #include "./temp-vars.h"
 #include "./code-repository.h"
+#include "./expression-evaluator.h"
 
 UT_array *varsBeingDeclared = NULL;
-// UT_array *operandsStack, *operatorsStack = NULL;
 char *s, *expressionBeingEvaludated, *varBeingAssigned = NULL;
 
 void consumeTransition(CodeGeneratorTransition *transition) {
@@ -56,13 +56,9 @@ void consumeTransition(CodeGeneratorTransition *transition) {
 
   if (strcmp(submachine, "atribuicao") == 0) {
     if (state == 0) {
-
-      /*
-      it's the very beginning of an attribution, so it means we need
-      to start evaluating an expression (even if it's a single identifier)
-      */
-      // utarray_new(operandsStack, &ut_str_icd);
-      // utarray_new(operatorsStack, &ut_str_icd);
+      startExpression();
+    } else if (state == 4) {
+      finishExpression();
     }
   }
 
