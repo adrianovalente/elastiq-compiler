@@ -55,7 +55,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
   }
 
   if (strcmp(submachine, "atribuicao") == 0) {
-    if (state == 0) {
+    if (state == 2) {
       startExpression();
     } else if (state == 4) {
       finishExpression();
@@ -70,19 +70,19 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       return; // better safe than sorry haha
     }
 
-    // if (operandsStack != NULL && operatorsStack != NULL) {
-    //   if (!expressionBeingEvaludated) {
-    //     expressionBeingEvaludated = getTempVar();
-    //
-    //     char *s = malloc(strlen(expressionBeingEvaludated) + 1);
-    //     strcpy(s, expressionBeingEvaludated); strcat(s, " K /0000"); utarray_push_back(dataArea, &s);
-    //     printf("Anonymous expression will be evaluated in the following var: %s", expressionBeingEvaludated);
-    //   }
-    //
-    //   utarray_push_back(operandsStack, &value);
-    // }
+    if (isEvaluatingExpression()) {
+      addOperand(transition->token);
+      return;
+    }
 
     return;
+  }
+
+  if (strcmp(submachine, "numero") == 0 && state == 999) {
+    if (isEvaluatingExpression()) {
+      addOperand(transition->token);
+      return;
+    }
   }
 
   if (strcmp(submachine, "expressao") == 0) {
