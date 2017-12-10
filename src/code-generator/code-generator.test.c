@@ -33,11 +33,11 @@ int main() {
    */
   processToken(generateToken(SEMICOLON, ";"), onTransition);
 
-  // world = hello + 3 + 2;
+  // world = hello * 3 + 2;
   processToken(generateToken(IDENTIFIER, "world"), onTransition);
   processToken(generateToken(ATTRIBUTION, ":="), onTransition);
   processToken(generateToken(IDENTIFIER, "hello"), onTransition);
-  processToken(generateToken(ARITHMETIC_OPERATOR, "+"), onTransition);
+  processToken(generateToken(ARITHMETIC_OPERATOR, "*"), onTransition);
   processToken(generateToken(NUMBER, "3"), onTransition);
   processToken(generateToken(ARITHMETIC_OPERATOR, "+"), onTransition);
   processToken(generateToken(NUMBER, "2"), onTransition);

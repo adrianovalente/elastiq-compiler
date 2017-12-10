@@ -8,7 +8,8 @@
 #include "./expression-evaluator.h"
 
 UT_array *varsBeingDeclared = NULL;
-char *s, *expressionBeingEvaludated, *varBeingAssigned = NULL;
+char *s, *varBeingAssigned = NULL;
+bool waitingForIdentifierToAssign = false;
 
 void consumeTransition(CodeGeneratorTransition *transition) {
   if (transition == NULL) {
@@ -55,10 +56,15 @@ void consumeTransition(CodeGeneratorTransition *transition) {
   }
 
   if (strcmp(submachine, "atribuicao") == 0) {
-    if (state == 2) {
+    if (state == 0) {
+      waitingForIdentifierToAssign = true;
+    } else if (state == 2) {
       startExpression();
     } else if (state == 4) {
-      finishExpression();
+      char *exp = finishExpression();
+      char *s = malloc(4); strcpy(s, "LD "); strcat(s, exp); strcat(s, " ; Result of Anonymous Expression"); addToCodeArea(s);
+      s = malloc(4); strcpy(s, "MM "); strcat(s, varBeingAssigned); strcat(s, " ; Assignment"); addToCodeArea(s);
+      varBeingAssigned = NULL;
     }
   }
 
@@ -68,6 +74,11 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       // TODO add to symbols table
 
       return; // better safe than sorry haha
+    }
+
+    if (waitingForIdentifierToAssign) {
+      varBeingAssigned = value;
+      waitingForIdentifierToAssign = false;
     }
 
     if (isEvaluatingExpression()) {
@@ -90,9 +101,6 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       addOperator(transition->token);
       return;
     }
-  }
-
-  if (strcmp(submachine, "expressao") == 0) {
   }
 
 }
