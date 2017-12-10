@@ -18,7 +18,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
   char *value = transition->token == NULL ? "---" : transition->token->value;
   int state = transition->state;
 
-  printf("Consuming transition: %s %d, Token: %s\n", submachine, state, value);
+  printf(ANSI_COLOR_CYAN "Consuming transition: %s %d, Token: %s\n" ANSI_COLOR_RESET, submachine, state, value);
 
   if (strcmp(submachine, "PROGRAMA") == 0) {
     s = "@ /0000"; utarray_push_back(dataArea, &s);
@@ -28,19 +28,32 @@ void consumeTransition(CodeGeneratorTransition *transition) {
     s = "INICIO LD ZERO"; utarray_push_back(codeArea, &s);
   }
 
-  if (strcmp(submachine, "declaracoes") == 0 && strcmp(value, "VAR") == 0) {
-    utarray_new(varsBeingDeclared, &ut_str_icd);
+  if (strcmp(submachine, "declaracoes") == 0) {
+
+    if (state == 0) {
+      printf("Starting a declaration!\n");
+      utarray_new(varsBeingDeclared, &ut_str_icd);
+    } else if (state == 3) {
+      printf("Declaration is finished.\n");
+      char **p = NULL;
+      while ((p=(char**)utarray_next(varsBeingDeclared, p))) {
+
+        /*
+         * Allocating memory as a local array
+         * https://stackoverflow.com/questions/8716714/bus-error-10-error
+         */
+         s = malloc(strlen(*p) + 1);
+         strcpy(s, *p); strcat(s, " K /0000"); utarray_push_back(dataArea, &s);
+      }
+
+      utarray_free(varsBeingDeclared); varsBeingDeclared = NULL;
+
+    }
   }
 
-  if (strcmp(submachine, "id") == 0 && state == 2) {
+  if (strcmp(submachine, "id") == 0 && state == 999) {
     if (varsBeingDeclared != NULL) {
-      /*
-       * Allocating memory as a local array
-       * https://stackoverflow.com/questions/8716714/bus-error-10-error
-       */
-      s = malloc(strlen(value) + 1);
-      strcpy(s, value); strcat(s, " K /0000"); utarray_push_back(dataArea, &s);
-
+      utarray_push_back(varsBeingDeclared, &value);
       // TODO add to symbols table
     }
   }

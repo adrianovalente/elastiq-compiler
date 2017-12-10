@@ -200,19 +200,18 @@ bool consome_token(APE *ape, Token *token, void (*cb)(CodeGeneratorTransition *t
         automato->estado = chamada->estadoResultado;
 
         /* Não empilha identificador nem número, eles estao no lexico */
-        if (strcmp(chamada->submaquina, "id") != 0
-            &&
-            strcmp(chamada->submaquina, "numero") != 0) {
+        if (strcmp(chamada->submaquina, "id") != 0 && strcmp(chamada->submaquina, "numero") != 0) {
 
             /* Empilha automato e consome token novamente */
             empilha_automato(ape, busca_novo_automato(ape, chamada->submaquina));
 
-            cb(allocCodeGeneratorTransition(NULL, (char *)chamada->submaquina, chamada->estadoResultado));
+            cb(allocCodeGeneratorTransition(NULL, (char *)chamada->submaquina, ape->automatoAtual->estado));
             return consome_token(ape, token, cb);
         } else {
 
           /* Se é um número ou identificador, o token pode ser consumido instantanaemaente */
-          cb(allocCodeGeneratorTransition(token, (char *)chamada->submaquina, chamada->estadoResultado));
+          cb(allocCodeGeneratorTransition(token, (char *)chamada->submaquina, 999));
+          cb(allocCodeGeneratorTransition(NULL, (char *)automato->title, automato->estado));
           return true;
         }
 
