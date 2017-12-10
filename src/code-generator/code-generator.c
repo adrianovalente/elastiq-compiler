@@ -3,10 +3,12 @@
 
 #include "../utils/colors.h"
 #include "./code-generator.h"
+#include "./temp-vars.h"
+#include "./code-repository.h"
 
 UT_array *varsBeingDeclared = NULL;
-UT_array *dataArea, *codeArea;
-char *s;
+// UT_array *operandsStack, *operatorsStack = NULL;
+char *s, *expressionBeingEvaludated, *varBeingAssigned = NULL;
 
 void consumeTransition(CodeGeneratorTransition *transition) {
   if (transition == NULL) {
@@ -21,11 +23,10 @@ void consumeTransition(CodeGeneratorTransition *transition) {
   printf(ANSI_COLOR_CYAN "Consuming transition: %s %d, Token: %s\n" ANSI_COLOR_RESET, submachine, state, value);
 
   if (strcmp(submachine, "PROGRAMA") == 0) {
-    s = "@ /0000"; utarray_push_back(dataArea, &s);
-    s = "ZERO K /0000"; utarray_push_back(dataArea, &s); // zero constant
-//    s = "JP INICIO"; utarray_push_back(dataArea, &s);
+    addToDataArea("@ /0000");
+    addToDataArea("ZERO K /0000");
+    addToCodeArea("INICIO LD ZERO");
 
-    s = "INICIO LD ZERO"; utarray_push_back(codeArea, &s);
   }
 
   if (strcmp(submachine, "declaracoes") == 0) {
@@ -43,11 +44,25 @@ void consumeTransition(CodeGeneratorTransition *transition) {
          * https://stackoverflow.com/questions/8716714/bus-error-10-error
          */
          s = malloc(strlen(*p) + 1);
-         strcpy(s, *p); strcat(s, " K /0000"); utarray_push_back(dataArea, &s);
+         strcpy(s, *p); strcat(s, " K /0000"); addToDataArea(s);
       }
 
       utarray_free(varsBeingDeclared); varsBeingDeclared = NULL;
 
+    }
+
+    return; // better being safe, huh?
+  }
+
+  if (strcmp(submachine, "atribuicao") == 0) {
+    if (state == 0) {
+
+      /*
+      it's the very beginning of an attribution, so it means we need
+      to start evaluating an expression (even if it's a single identifier)
+      */
+      // utarray_new(operandsStack, &ut_str_icd);
+      // utarray_new(operatorsStack, &ut_str_icd);
     }
   }
 
@@ -55,21 +70,26 @@ void consumeTransition(CodeGeneratorTransition *transition) {
     if (varsBeingDeclared != NULL) {
       utarray_push_back(varsBeingDeclared, &value);
       // TODO add to symbols table
+
+      return; // better safe than sorry haha
     }
+
+    // if (operandsStack != NULL && operatorsStack != NULL) {
+    //   if (!expressionBeingEvaludated) {
+    //     expressionBeingEvaludated = getTempVar();
+    //
+    //     char *s = malloc(strlen(expressionBeingEvaludated) + 1);
+    //     strcpy(s, expressionBeingEvaludated); strcat(s, " K /0000"); utarray_push_back(dataArea, &s);
+    //     printf("Anonymous expression will be evaluated in the following var: %s", expressionBeingEvaludated);
+    //   }
+    //
+    //   utarray_push_back(operandsStack, &value);
+    // }
+
+    return;
   }
 
-}
-
-void printCode() {
-  char **p = NULL;
-  while ((p=(char**)utarray_next(dataArea, p))) {
-    printf("\n%s",*p);
-  }
-
-  printf("\n;------- Code Area\n\n");
-  
-  while ((p=(char**)utarray_next(codeArea, p))) {
-    printf("%s\n",*p);
+  if (strcmp(submachine, "expressao") == 0) {
   }
 
 }
@@ -78,7 +98,5 @@ void printCode() {
  * Inits this module, initializing arrays and setting initial vars.
  */
 void initCodeGenerator() {
-  utarray_new(dataArea, &ut_str_icd);
-  utarray_new(codeArea, &ut_str_icd);
-
+  initCode();
 }
