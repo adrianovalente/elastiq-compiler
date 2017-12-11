@@ -9,8 +9,8 @@ APE *getAutomata() {
   return _ape;
 }
 
-bool processToken(Token *token) {
-  return consome_token(getAutomata(), token);
+bool processToken(Token *token, void (*cb)(CodeGeneratorTransition *transition)) {
+  return consome_token(getAutomata(), token, cb);
 }
 
 bool automataIsValid() {

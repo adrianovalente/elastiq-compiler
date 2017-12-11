@@ -37,5 +37,6 @@ typedef struct {
 
 char *getTokenTypeDescription(TokenType type);
 Token *finalizeToken(char *value, State state);
+Token *generateToken(TokenType type, char *value);
 
 #endif

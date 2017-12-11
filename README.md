@@ -10,24 +10,28 @@
 [![platforms](https://img.shields.io/badge/platform-linux--64%20%7C%20osx--64-orange.svg)]()
 
 ```
-program hello
+PROGRAM
 
-declare int a;
-declare int b;
+VAR hello, world;
 
-begin
-  a := 1;
-  b := 2;
+hello := 3;
+world := 2 * hello + 5;
 
-  echo "1 + 2 equals ";
-  echo (a + b);
-
-end;
+END PROGRAM;
 ```
 
 ## What is this repo about?
 
 This repo holds the `elastiq` compiler, as well as the language documentation.
+
+## Getting Started
+To have a copy of the compiler running on your computer, just `git clone` it and then run `make`.
+
+After that, you can compile a `.el` file using the generated binary:
+
+``` bash
+./dist/elastiq-compiler example.el
+```
 
 ## Lexical Analyzer
 In our first concept of the language, it will have:

@@ -4,9 +4,16 @@
 #include "utils/colors.h"
 #include "lexical-analyser.h"
 #include "syntatic-analyser.h"
+#include "code-generator/code-generator.h"
+#include "code-generator/code-generator-transition.h"
+#include "code-generator/code-repository.h"
+
+void onGetTransition(CodeGeneratorTransition *transition) {
+  consumeTransition(transition);
+}
 
 void onGetToken(Token *token) {
-  if (!processToken(token)) {
+  if (!processToken(token, onGetTransition)) {
     printf(ANSI_COLOR_RED "Unexpected token %s\n" ANSI_COLOR_RESET, token->value);
     exit(EXIT_FAILURE);
   }
@@ -19,6 +26,7 @@ int main(int argc, char *argv[]) {
     printf(ANSI_COLOR_RED "Please provide a file to be analysed!" ANSI_COLOR_RESET);
   }
 
+  initCodeGenerator();
   getTokens(filePath, onGetToken);
 
   if (!automataIsValid()) {
@@ -27,4 +35,6 @@ int main(int argc, char *argv[]) {
   } else {
     printf(ANSI_COLOR_GREEN "\n✓ " ANSI_COLOR_RESET "Program is valid!\n");
   }
+
+  printCode();
 }
