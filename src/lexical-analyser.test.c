@@ -6,7 +6,7 @@
 #include "token.h"
 #include "lexical-analyser.h"
 
-static const int EXPECTED_TOKENS_LENGTH = 5;
+static const int EXPECTED_TOKENS_LENGTH = 8;
 
 Token *tokens[16] = { NULL };
 int tokensLength = 0;
@@ -93,11 +93,14 @@ int main(int argc, char *argv[]) {
   getTokens(filePath, onToken);
   test("Should get expected number of tokens", assertTokensLength);
 
-  assertTokenContents(0, IDENTIFIER, "hello");
-  assertTokenContents(1, IDENTIFIER, "world");
-  assertTokenContents(2, ATTRIBUTION, ":=");
-  assertTokenContents(3, NUMBER, "23");
-  assertTokenContents(4, RESERVED_WORD, "BEGIN");
+  assertTokenContents(0, NUMBER, "2");
+  assertTokenContents(1, PUSH, ">");
+  assertTokenContents(2, IDENTIFIER, "n");
+  assertTokenContents(3, SEPARATOR, "(");
+  assertTokenContents(4, IDENTIFIER, "a");
+  assertTokenContents(5, PUSH, ">");
+  assertTokenContents(6, IDENTIFIER, "b");
+  assertTokenContents(7, SEPARATOR, ")");
   printf("\n");
   return 0;
 }

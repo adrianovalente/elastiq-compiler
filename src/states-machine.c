@@ -59,8 +59,8 @@ void processChar(int a) {
     case INITIAL_STATE:
       if (isalpha(a) || a == '@') nextState = STATE_Q1;
       else if (isdigit(a)) nextState = STATE_Q2;
-      else if (a == '+') nextState = STATE_Q3;
-      else if (a == '<' || a == '>') nextState = STATE_Q4;
+      else if (a == '<' || a == '>') nextState = STATE_Q3;
+      else if (a == '+') nextState = STATE_Q4;
       else if (a == '-') nextState = STATE_Q5;
       else if (a == '?') nextState = STATE_Q6;
       else if (a == '(' || a == ')') nextState = STATE_Q7;
@@ -72,8 +72,8 @@ void processChar(int a) {
     /*   else if (isdigit(a)) nextState = STATE_Q1; */
     /*   break; */
 
-    /* case STATE_Q2: */
-    /*   if (isdigit(a)) nextState = STATE_Q2; */
+    case STATE_Q2:
+      if (isdigit(a)) nextState = STATE_Q2;
 
     /*   // reading anything but a number is an error in this stage */
     /*   else nextState = ERROR_STATE; */

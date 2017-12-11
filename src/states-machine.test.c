@@ -31,11 +31,7 @@ void test(char *testDescription, void (*f)()) {
 }
 
 void checkIdentifier() {
-  processChar('h');
-  processChar('e');
-  processChar('l');
-  processChar('l');
-  processChar('o');
+  processChar('a');
   assert(getCurrentState(), STATE_Q1);
 }
 
@@ -45,34 +41,43 @@ void checkInteger() {
   assert(getCurrentState(), STATE_Q2);
 }
 
-void checkSemicolon() {
-  processChar(';');
+void checkPushOperator() {
+  processChar('>');
   assert(getCurrentState(), STATE_Q3);
 }
 
-void checkEqualComparator() {
-  processChar('=');
-  processChar('=');
+void checkAddOperator() {
+  processChar('+');
+  assert(getCurrentState(), STATE_Q4);
+}
+
+void checkSubOperator() {
+  processChar('-');
   assert(getCurrentState(), STATE_Q5);
 }
 
-void checkIdentifierWithComparator() {
-  processChar('a');
-  processChar('b');
-  processChar('=');
-  assert(getCurrentState(), INITIAL_STATE);
+void checkClearOperator() {
+  processChar('?');
+  assert(getCurrentState(), STATE_Q6);
 }
 
+void checkSepator() {
+  processChar('(');
+  assert(getCurrentState(), STATE_Q7);
+}
 
 int main() {
 
   printf(ANSI_COLOR_BLUE "\n  STATES MACHINE\n" ANSI_COLOR_RESET);
 
-  test("Should end execution of string string \"hello\" in STATE_Q1", checkIdentifier);
+  test("Should end execution of string \"a\" in STATE_Q1", checkIdentifier);
   test("Should end execution of string \"12\" in STATE_Q2", checkInteger);
-  test("Should end execution of string \";\" in STATE_Q3", checkSemicolon);
-  test("Should end execution of string \"==\" ins STATE_Q5", checkEqualComparator);
-  test("Should reset state after finding first \"=\"", checkIdentifierWithComparator);
+  test("Should end execution of string \"<\" in STATE_Q3", checkPushOperator);
+  test("Should end execution of string \"+\" ins STATE_Q5", checkAddOperator);
+  test("Should end execution of string \"-\" ins STATE_Q5", checkSubOperator);
+  test("Should end execution of string \"?\" ins STATE_Q5", checkClearOperator);
+  test("Should end execution of string \"(\" ins STATE_Q5", checkSepator);
+  /* test("Should reset state after finding first \" \"", checkIdentifierWithComparator); */
 
   printf("\n");
   return(0);
