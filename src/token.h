@@ -27,7 +27,7 @@ typedef enum {
   ADD,
   SUB,
   CLEAR,
-  SEPARATOR,
+  PARENTHESES,
   COMMENT
 } TokenType;
 

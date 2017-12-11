@@ -96,11 +96,11 @@ int main(int argc, char *argv[]) {
   assertTokenContents(0, NUMBER, "2");
   assertTokenContents(1, PUSH, ">");
   assertTokenContents(2, IDENTIFIER, "n");
-  assertTokenContents(3, SEPARATOR, "(");
+  assertTokenContents(3, PARENTHESES, "(");
   assertTokenContents(4, IDENTIFIER, "a");
   assertTokenContents(5, PUSH, ">");
   assertTokenContents(6, IDENTIFIER, "b");
-  assertTokenContents(7, SEPARATOR, ")");
+  assertTokenContents(7, PARENTHESES, ")");
   printf("\n");
   return 0;
 }

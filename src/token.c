@@ -20,7 +20,7 @@ char *getTokenTypeDescription(TokenType type) {
     case (ADD)                     : return "ADD";
     case (SUB)                     : return "SUB";
     case (CLEAR)                   : return "CLEAR";
-    case (SEPARATOR)               : return "SEPARATOR";
+    case (PARENTHESES)             : return "PARENTHESES";
     case (COMMENT)                 : return "COMMENT";
   }
 }
@@ -59,7 +59,7 @@ TokenType getTokenType(State state, char *tokenValue) {
     case STATE_Q4 : type = ADD; break;
     case STATE_Q5 : type = SUB; break;
     case STATE_Q6 : type = CLEAR;  break;
-    case STATE_Q7 : type = SEPARATOR; break;
+    case STATE_Q7 : type = PARENTHESES; break;
     case STATE_Q8 : type = COMMENT; break;
 
     default:
