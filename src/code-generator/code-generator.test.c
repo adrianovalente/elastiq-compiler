@@ -47,6 +47,8 @@ int main() {
 
   processToken(generateToken(RESERVED_WORD, "IF"), onTransition);
   processToken(generateToken(IDENTIFIER, "hello"), onTransition);
+  processToken(generateToken(LOGICAL_COMPARER, "=="), onTransition);
+  processToken(generateToken(NUMBER, "5"), onTransition);
   processToken(generateToken(RESERVED_WORD, "THEN"), onTransition);
 
   processToken(generateToken(IDENTIFIER, "world"), onTransition);

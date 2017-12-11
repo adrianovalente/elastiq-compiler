@@ -7,6 +7,7 @@
 #include <stdio.h>
 #include "../../lib/utarray.h"
 
+int logicalOperatorsCounter = 0;
 char *label = NULL;
 UT_array *operandsStack, *operatorsStack = NULL;
 
@@ -29,17 +30,15 @@ bool isEvaluatingExpression() {
  * precedence (i.e., multiplication or division)
  */
 bool isHighPrecedenceOperator(char *op) {
-  return strcmp(op, "*") == 0 || strcmp(op, "/") == 0;
+  return strcmp(op, "*") == 0 || strcmp(op, "/") == 0 ||
+    strcmp(op, "AND") == 0 || strcmp(op, "!=") == 0 || strcmp(op, "==") == 0;
 }
 
-/**
- * Consumes an operator by popping two elements from
- * the operands stack. The result is stored in a new
- * temp var, which is pushed again to the operands stack.
- *
- * @param {string} op - the operator
- */
-void consumeOperator(char *op) {
+bool isArithmeticOperastor(char *op) {
+  return strcmp(op, "*") == 0 || strcmp(op, "+") == 0 || strcmp(op, "/") == 0 || strcmp(op, "-") == 0;
+}
+
+void consumeArithmeticOperator(char *op) {
   char **operand, *s;
   operand = (char **)utarray_back(operandsStack);
 
@@ -59,6 +58,53 @@ void consumeOperator(char *op) {
   s = malloc(4); strcpy(s, "MM "); strcat(s, tmp); addToCodeArea(s); // storing temp result
 
 }
+
+void consumeLogicOperator(char *op) {
+
+  if (strcmp(op, "==") == 0) {
+    printf("== feels good man\n");
+
+    char **firstOperand = (char **)utarray_back(operandsStack);
+    char *s = malloc(4); strcpy(s, "LD "); strcat(s, *firstOperand); strcat(s, " ; First logical operator"); addToCodeArea(s);
+    utarray_pop_back(operandsStack);
+
+    char **secondOperand = (char **)utarray_back(operandsStack);
+    s = malloc(3); strcpy(s, "- "); strcat(s, *secondOperand); strcat(s, " ; Second logical operator"); addToCodeArea(s);
+
+    utarray_pop_back(operandsStack);
+    char *tmp = getTempVar();
+    utarray_push_back(operandsStack, &tmp); // pushing value to tmp var
+
+    s = malloc(4); strcpy(s, "JZ "); strcat(s, tmp); strcat(s, "salva1"); addToCodeArea(s);
+    addToCodeArea("LD ZERO");
+    s = malloc(4); strcpy(s, "MM "); strcat(s, tmp); addToCodeArea(s);
+    s = malloc(4); strcpy(s, "JP "); strcat(s, tmp); strcat(s, "final"); addToCodeArea(s);
+
+    s = malloc(strlen(tmp) + 1); strcpy(s, tmp); strcat(s, "salva1 LD UM"); addToCodeArea(s);
+    s = malloc(4); strcpy(s, "MM "); strcat(s, tmp); addToCodeArea(s);
+    s = malloc(4); strcpy(s, "MM "); strcat(s, tmp); addToCodeArea(s);
+
+    s = malloc(strlen(tmp) + 1); strcpy(s, tmp); strcat(s, "final LD ZERO"); addToCodeArea(s);
+
+    return;
+  }
+
+  printf(ANSI_COLOR_RED "Unknown logic operator: %s\n" ANSI_COLOR_RESET, op);
+  exit(EXIT_FAILURE);
+}
+
+/**
+ * Consumes an operator by popping two elements from
+ * the operands stack. The result is stored in a new
+ * temp var, which is pushed again to the operands stack.
+ *
+ * @param {string} op - the operator
+ */
+void consumeOperator(char *op) {
+  if (isArithmeticOperastor(op)) return consumeArithmeticOperator(op);
+  else return consumeLogicOperator(op);
+}
+
 
 /**
  * If the operator has precedence greater than or equal to there
