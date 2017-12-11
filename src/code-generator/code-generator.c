@@ -2,6 +2,8 @@
 #include "../../lib/utarray.h"
 
 #include "../utils/colors.h"
+#include "../utils/strings.h"
+
 #include "./code-generator.h"
 #include "./temp-vars.h"
 #include "./code-repository.h"
@@ -10,6 +12,7 @@
 UT_array *varsBeingDeclared = NULL;
 char *s, *varBeingAssigned = NULL;
 bool waitingForIdentifierToAssign = false;
+int ifsCounter = 0;
 
 void consumeTransition(CodeGeneratorTransition *transition) {
   if (transition == NULL) {
@@ -88,6 +91,33 @@ void consumeTransition(CodeGeneratorTransition *transition) {
     }
 
     return;
+  }
+
+  if (strcmp(submachine, "condicional") == 0) {
+
+    if (state == 1) {
+      printf("Starting a conditional.\n");
+      startExpression();
+    }
+
+    if (state == 3) {
+      char *condition = finishExpression();
+
+      printf("Condition is stored here %s\n", condition);
+      char *s = malloc(4); strcpy(s, "LD "); strcat(s, condition); strcat(s, " ; Condition is here!");
+
+      addToCodeArea(s);
+      char *counter = intToString(ifsCounter);
+      s = malloc(4); strcpy(s, "JZ "); strcat(s, counter); strcat(s, "endif ; Evaluating Conditional");
+      addToCodeArea(s);
+
+    }
+
+    if (state == 7) {
+      printf("End if.; \n");
+      char *s = intToString(ifsCounter); strcat(s, "endif LD ZERO"); addToCodeArea(s);
+      ifsCounter++;
+    }
   }
 
   if (strcmp(submachine, "numero") == 0 && state == 999) {

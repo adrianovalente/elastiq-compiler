@@ -43,6 +43,22 @@ int main() {
   processToken(generateToken(NUMBER, "2"), onTransition);
   processToken(generateToken(SEMICOLON, ";"), onTransition);
 
+  processToken(generateToken(SEMICOLON, ";"), onTransition);  // sorry
+
+  processToken(generateToken(RESERVED_WORD, "IF"), onTransition);
+  processToken(generateToken(IDENTIFIER, "hello"), onTransition);
+  processToken(generateToken(RESERVED_WORD, "THEN"), onTransition);
+
+  processToken(generateToken(IDENTIFIER, "world"), onTransition);
+  processToken(generateToken(ATTRIBUTION, ":="), onTransition);
+  processToken(generateToken(NUMBER, "2"), onTransition);
+  processToken(generateToken(SEMICOLON, ";"), onTransition);
+
+  processToken(generateToken(RESERVED_WORD, "END"), onTransition);
+  processToken(generateToken(RESERVED_WORD, "IF"), onTransition);
+  processToken(generateToken(SEMICOLON, ";"), onTransition);
+
+
   printCode();
 
   printf("\n\nBye! õ/ \n");
