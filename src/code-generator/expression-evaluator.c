@@ -59,6 +59,12 @@ void consumeArithmeticOperator(char *op) {
 
 }
 
+char *stringWithText(char *a) {
+  char *str = malloc((strlen(a) + 1) * sizeof(char));
+  strcpy(str, a);
+  return str;
+}
+
 void consumeLogicOperator(char *op) {
 
   if (strcmp(op, "==") == 0) {
@@ -75,16 +81,15 @@ void consumeLogicOperator(char *op) {
     char *tmp = getTempVar();
     utarray_push_back(operandsStack, &tmp); // pushing value to tmp var
 
-    s = malloc(4); strcpy(s, "JZ "); strcat(s, tmp); strcat(s, "salva1"); addToCodeArea(s);
+    s = stringWithText("JZ "); strcat(s, tmp); strcat(s, "salva1"); addToCodeArea(s);
     addToCodeArea("LD ZERO");
-    s = malloc(4); strcpy(s, "MM "); strcat(s, tmp); addToCodeArea(s);
-    s = malloc(4); strcpy(s, "JP "); strcat(s, tmp); strcat(s, "final"); addToCodeArea(s);
+    s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
+    s = stringWithText("JP "); strcat(s, tmp); strcat(s, "final"); addToCodeArea(s);
 
-    s = malloc(strlen(tmp) + 1); strcpy(s, tmp); strcat(s, "salva1 LD UM"); addToCodeArea(s);
-    s = malloc(4); strcpy(s, "MM "); strcat(s, tmp); addToCodeArea(s);
-    s = malloc(4); strcpy(s, "MM "); strcat(s, tmp); addToCodeArea(s);
+    s = stringWithText(tmp); strcat(s, "salva1 LD UM"); addToCodeArea(s);
+    s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
 
-    s = malloc(strlen(tmp) + 1); strcpy(s, tmp); strcat(s, "final LD ZERO"); addToCodeArea(s);
+    s = stringWithText(tmp); strcat(s, "final LD ZERO"); addToCodeArea(s);
 
     return;
   }
@@ -207,8 +212,8 @@ char *finishExpression() {
   }
 
   char **val = (char **)utarray_back(operandsStack);
-  char *s = malloc(4); strcpy(s, "LD "); strcat(s, *val); addToCodeArea(s);
-  s = malloc(4); strcpy(s, "MM "); strcat(s, label); addToCodeArea(s);
+  char *s = stringWithText("LD "); strcat(s, *val); addToCodeArea(s);
+  s = stringWithText("MM "); strcat(s, label); addToCodeArea(s);
 
 
   state = ExpressionStatePaused;
