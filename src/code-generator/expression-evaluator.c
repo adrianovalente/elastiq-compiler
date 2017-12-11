@@ -42,27 +42,21 @@ void consumeArithmeticOperator(char *op) {
   char **operand, *s;
   operand = (char **)utarray_back(operandsStack);
 
-  s = malloc(4); strcpy(s, "LD "); strcat(s, *operand); addToCodeArea(s); // loading first operator
+  s = stringWithText("LD "); strcat(s, *operand); addToCodeArea(s); // loading first operator
 
   utarray_pop_back(operandsStack); // pop first operand from stack
   operand = (char **)utarray_back(operandsStack);
 
-  s = malloc(strlen(op)+ 1); strcpy(s, op);
+  s = stringWithText(op); strcpy(s, op);
   strcat(s, " "); strcat(s, *operand); addToCodeArea(s); // loading first operator
 
   utarray_pop_back(operandsStack); // pop first operand from stack
 
   char *tmp = getTempVar();
   utarray_push_back(operandsStack, &tmp); // pushing value to tmp var
-  s = malloc(strlen(tmp) + 1); strcpy(s, tmp); strcat(s, " K /0000"); addToDataArea(s);
-  s = malloc(4); strcpy(s, "MM "); strcat(s, tmp); addToCodeArea(s); // storing temp result
+  s = stringWithText(tmp); strcat(s, " K /0000"); addToDataArea(s);
+  s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s); // storing temp result
 
-}
-
-char *stringWithText(char *a) {
-  char *str = malloc((strlen(a) + 1) * sizeof(char));
-  strcpy(str, a);
-  return str;
 }
 
 void consumeLogicOperator(char *op) {
@@ -71,11 +65,11 @@ void consumeLogicOperator(char *op) {
     printf("== feels good man\n");
 
     char **firstOperand = (char **)utarray_back(operandsStack);
-    char *s = malloc(4); strcpy(s, "LD "); strcat(s, *firstOperand); strcat(s, " ; First logical operator"); addToCodeArea(s);
+    char *s = stringWithText("LD "); strcat(s, *firstOperand); strcat(s, " ; First logical operator"); addToCodeArea(s);
     utarray_pop_back(operandsStack);
 
     char **secondOperand = (char **)utarray_back(operandsStack);
-    s = malloc(3); strcpy(s, "- "); strcat(s, *secondOperand); strcat(s, " ; Second logical operator"); addToCodeArea(s);
+    s = stringWithText("- "); strcat(s, *secondOperand); strcat(s, " ; Second logical operator"); addToCodeArea(s);
 
     utarray_pop_back(operandsStack);
     char *tmp = getTempVar();
@@ -132,7 +126,7 @@ void addOperand(Token *token) {
 
     case NUMBER:
       tmp = getTempVar();
-      s = malloc(strlen(tmp) + 1); strcpy(s, tmp);
+      s = stringWithText(tmp); strcpy(s, tmp);
       strcat(s, " K =");
       strcat(s, token->value);
       addToDataArea(s);
@@ -180,7 +174,7 @@ void startExpression() {
 
   state = ExpressionStateRunning;
   label = getTempVar();
-  char *s = malloc(strlen(label) + 1); strcpy(s, label);
+  char *s = stringWithText(label); strcpy(s, label);
   strcat(s, " K /0000 ; Anonymous Expression"); addToDataArea(s);
 
   utarray_new(operandsStack, &ut_str_icd);
@@ -214,7 +208,6 @@ char *finishExpression() {
   char **val = (char **)utarray_back(operandsStack);
   char *s = stringWithText("LD "); strcat(s, *val); addToCodeArea(s);
   s = stringWithText("MM "); strcat(s, label); addToCodeArea(s);
-
 
   state = ExpressionStatePaused;
   return label;

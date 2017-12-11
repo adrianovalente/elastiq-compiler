@@ -48,8 +48,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
          * Allocating memory as a local array
          * https://stackoverflow.com/questions/8716714/bus-error-10-error
          */
-         s = malloc(strlen(*p) + 1);
-         strcpy(s, *p); strcat(s, " K /0000"); addToDataArea(s);
+         s = stringWithText(*p); strcat(s, " K /0000"); addToDataArea(s);
       }
 
       utarray_free(varsBeingDeclared); varsBeingDeclared = NULL;
@@ -66,8 +65,8 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       startExpression();
     } else if (state == 4) {
       char *exp = finishExpression();
-      char *s = malloc(4); strcpy(s, "LD "); strcat(s, exp); strcat(s, " ; Result of Anonymous Expression"); addToCodeArea(s);
-      s = malloc(4); strcpy(s, "MM "); strcat(s, varBeingAssigned); strcat(s, " ; Assignment"); addToCodeArea(s);
+      char *s = stringWithText("LD "); strcat(s, exp); strcat(s, " ; Result of Anonymous Expression"); addToCodeArea(s);
+      s = stringWithText("MM "); strcat(s, varBeingAssigned); strcat(s, " ; Assignment"); addToCodeArea(s);
       varBeingAssigned = NULL;
     }
   }
@@ -104,17 +103,17 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       char *condition = finishExpression();
 
       printf("Condition is stored here %s\n", condition);
-      char *s = malloc(4); strcpy(s, "LD "); strcat(s, condition); strcat(s, " ; Condition is here!");
+      char *s = stringWithText("LD "); strcat(s, condition); strcat(s, " ; Condition is here!");
 
       addToCodeArea(s);
       char *counter = intToString(ifsCounter);
-      s = malloc(4); strcpy(s, "JZ "); strcat(s, counter); strcat(s, "endif ; Evaluating Conditional");
+      s = stringWithText("JZ "); strcat(s, counter); strcat(s, "endif ; Evaluating Conditional");
       addToCodeArea(s);
 
     }
 
     if (state == 7) {
-      printf("End if.; \n");
+      printf("End if \n");
       char *s = intToString(ifsCounter); strcat(s, "endif LD ZERO"); addToCodeArea(s);
       ifsCounter++;
     }
