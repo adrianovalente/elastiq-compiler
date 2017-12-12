@@ -25,7 +25,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
 
   printf(ANSI_COLOR_CYAN "Consuming transition: %s %d, Token: %s\n" ANSI_COLOR_RESET, submachine, state, value);
 
-  if (strcmp(submachine, "PROGRAMA") == 0) {
+  if (strcmp(submachine, "PROGRAMA") == 0 && state == 1) {
     addToDataArea("@ /0000");
     addToDataArea("MAIN JP INICIO");
     addToDataArea("ZERO K /0000");
