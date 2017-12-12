@@ -8,7 +8,7 @@ char *intToString(int a) {
 }
 
 char *stringWithText(char *a) {
-  char *str = malloc((strlen(a) + 1) * sizeof(char));
+  char *str = malloc((strlen(a) + 40) * sizeof(char));
   strcpy(str, a);
   return str;
 }
