@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include "../../lib/utarray.h"
 
-int logicalOperatorsCounter = 0;
 char *label = NULL;
 UT_array *operandsStack, *operatorsStack = NULL;
 
@@ -61,27 +60,32 @@ void consumeArithmeticOperator(char *op) {
 
 void consumeLogicOperator(char *op) {
 
+  // getting second operand
+  char **el = (char **)utarray_back(operandsStack);
+  char *secondOperand = stringWithText(*el);
+  utarray_pop_back(operandsStack);
+
+  // getting first operand
+  el = (char **)utarray_back(operandsStack);
+  char *firstOperand = stringWithText(*el);
+  utarray_pop_back(operandsStack);
+
+  // pushing result
+  char *tmp = getTempVar();
+  utarray_push_back(operandsStack, &tmp); // pushing value to tmp var
+
+  char *s = stringWithText("LD "); strcat(s, firstOperand); strcat(s, " ; First logical operator"); addToCodeArea(s);
+  s = stringWithText("- "); strcat(s, secondOperand); strcat(s, " ; Second logical operator"); addToCodeArea(s);
+
+
   if (strcmp(op, "==") == 0) {
-
-    char **firstOperand = (char **)utarray_back(operandsStack);
-    char *s = stringWithText("LD "); strcat(s, *firstOperand); strcat(s, " ; First logical operator"); addToCodeArea(s);
-    utarray_pop_back(operandsStack);
-
-    char **secondOperand = (char **)utarray_back(operandsStack);
-    s = stringWithText("- "); strcat(s, *secondOperand); strcat(s, " ; Second logical operator"); addToCodeArea(s);
-
-    utarray_pop_back(operandsStack);
-    char *tmp = getTempVar();
-    utarray_push_back(operandsStack, &tmp); // pushing value to tmp var
 
     s = stringWithText("JZ "); strcat(s, tmp); strcat(s, "salva1"); addToCodeArea(s);
     addToCodeArea("LD ZERO");
     s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
     s = stringWithText("JP "); strcat(s, tmp); strcat(s, "final"); addToCodeArea(s);
-
     s = stringWithText(tmp); strcat(s, "salva1 LD UM"); addToCodeArea(s);
     s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
-
     s = stringWithText(tmp); strcat(s, "final LD ZERO"); addToCodeArea(s);
 
     return;
