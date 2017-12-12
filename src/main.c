@@ -5,15 +5,11 @@
 #include "lexical-analyser.h"
 #include "syntatic-analyser.h"
 
-/* void onGetToken(Token *token) { */
-/*   if (!processToken(token)) { */
-/*     printf(ANSI_COLOR_RED "Unexpected token %s\n" ANSI_COLOR_RESET, token->value); */
-/*     exit(EXIT_FAILURE); */
-/*   } */
-/* } */
-
-void printToken(Token *token) {
-  printf(ANSI_COLOR_GREEN "Token received is %s\n" ANSI_COLOR_RESET, token->value);
+void onGetToken(Token *token) {
+  if (!processToken(token)) {
+    printf(ANSI_COLOR_RED "Unexpected token %s\n" ANSI_COLOR_RESET, token->value);
+    exit(EXIT_FAILURE);
+  }
 }
 
 
@@ -23,13 +19,12 @@ int main(int argc, char *argv[]) {
     printf(ANSI_COLOR_RED "Please provide a file to be analysed!" ANSI_COLOR_RESET);
   }
 
-  /* getTokens(filePath, onGetToken); */
-  getTokens(filePath, printToken);
+  getTokens(filePath, onGetToken);
 
-  /* if (!automataIsValid()) { */
-  /*   printf(ANSI_COLOR_RED "\nInvalid Program!\n" ANSI_COLOR_RESET); */
-  /*   exit(EXIT_FAILURE); */
-  /* } else { */
-  /*   printf(ANSI_COLOR_GREEN "\n✓ " ANSI_COLOR_RESET "Program is valid!\n"); */
-  /* } */
+  if (!automataIsValid()) {
+    printf(ANSI_COLOR_RED "\nInvalid Program!\n" ANSI_COLOR_RESET);
+    exit(EXIT_FAILURE);
+  } else {
+    printf(ANSI_COLOR_GREEN "\n✓ " ANSI_COLOR_RESET "Program is valid!\n");
+  }
 }
