@@ -51,7 +51,7 @@ void getTokens(char *path, void (*cb)(Token *token)) {
     exit(EXIT_FAILURE);
   }
 
-  char *tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
+  char *tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char)); strcpy(tokenValue, "");
   currentChar = fgetc(fp);
 
   // feels bad there is some async issue I did not find out 🙈
@@ -61,11 +61,11 @@ void getTokens(char *path, void (*cb)(Token *token)) {
 
     if (isSpacer(currentChar)) {
       if (strlen(tokenValue) > 0) {
-       cb(finalizeToken(tokenValue, currentState));
+        cb(finalizeToken(tokenValue, currentState));
 
-       // reseting the token value
-       tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
-       resetStateMachine();
+        // reseting the token value
+        tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char)); strcpy(tokenValue, "");
+        resetStateMachine();
 
       }
     } else {
@@ -82,7 +82,7 @@ void getTokens(char *path, void (*cb)(Token *token)) {
         cb(finalizeToken(tokenValue, currentState));
 
         // reseting the token value
-        tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
+        tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char)); strcpy(tokenValue, "");
 
         // coming back one char so we will read it again
         // fseek(fp, -1 * sizeof(char), SEEK_CUR);
