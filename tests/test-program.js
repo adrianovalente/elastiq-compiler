@@ -3,11 +3,8 @@ import { exec } from 'child_process'
 export default function testProgram ({ program, shouldFail = false }) {
 
   return async function (t) {
-    await Promise.all([
-      execCommand(`dist/elastiq-compiler tests/fixtures/${program}.el /tmp/${program}.asm`),
-      Promise.resolve(readFileSync(`tests/fixtures/${program}.fixture.asm`, 'utf-8').trim())
-    ])
-      .then(function ([r, expected]) {
+    await execCommand(`dist/elastiq-compiler tests/fixtures/${program}.el /tmp/${program}.asm`)
+      .then(r => {
         if (shouldFail !== r.failed) {
           console.error(r.output)
 
@@ -15,9 +12,11 @@ export default function testProgram ({ program, shouldFail = false }) {
         }
 
         if (!shouldFail) {
-          const program = r.output.split('Program is valid!')[1].trim()
-          if (program !== expected) console.error(r.output)
-          t.is(program, expected)
+          const expected = readFileSync(`tests/fixtures/${program}.fixture.asm`, 'utf-8').trim()
+          const code = readFileSync(`/tmp/${program}.asm`, 'utf-8').trim()
+
+          if (code !== expected) console.error(r.output)
+          t.is(code, expected)
         }
 
         return r
