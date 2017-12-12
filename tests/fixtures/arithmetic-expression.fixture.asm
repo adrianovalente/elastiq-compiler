@@ -19,11 +19,11 @@ LD 1temp
 MM 0temp
 LD 0temp ; Result of Anonymous Expression
 MM hello ; Assignment
-LD 3temp
-* hello
+LD hello
+* 3temp
 MM 4temp
-LD 5temp
-+ 4temp
+LD 4temp
++ 5temp
 MM 6temp
 LD 6temp
 MM 2temp

@@ -38,18 +38,21 @@ bool isArithmeticOperastor(char *op) {
 }
 
 void consumeArithmeticOperator(char *op) {
+  char *firstOperand, *secondOperand;
   char **operand, *s;
   operand = (char **)utarray_back(operandsStack);
-
-  s = stringWithText("LD "); strcat(s, *operand); addToCodeArea(s); // loading first operator
-
+  secondOperand = stringWithText(*operand);
   utarray_pop_back(operandsStack); // pop first operand from stack
+
   operand = (char **)utarray_back(operandsStack);
+  firstOperand = stringWithText(*operand);
+  utarray_pop_back(operandsStack); // pop first operand from stack
+
+
+  s = stringWithText("LD "); strcat(s, firstOperand); addToCodeArea(s); // loading first operator
 
   s = stringWithText(op); strcpy(s, op);
-  strcat(s, " "); strcat(s, *operand); addToCodeArea(s); // loading first operator
-
-  utarray_pop_back(operandsStack); // pop first operand from stack
+  strcat(s, " "); strcat(s, secondOperand); addToCodeArea(s); // loading first operator
 
   char *tmp = getTempVar();
   utarray_push_back(operandsStack, &tmp); // pushing value to tmp var

@@ -43,15 +43,15 @@ LD 6temp
 MM 4temp
 LD 4temp ; Verifying loop condition
 JZ 4tempendLoop
-LD entrada
-* fatorial
+LD fatorial
+* entrada
 MM 8temp
 LD 8temp
 MM 7temp
 LD 7temp ; Result of Anonymous Expression
 MM fatorial ; Assignment
-LD 10temp
-- entrada
+LD entrada
+- 10temp
 MM 11temp
 LD 11temp
 MM 9temp
