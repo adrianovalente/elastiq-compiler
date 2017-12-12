@@ -25,11 +25,17 @@ void consumeTransition(CodeGeneratorTransition *transition) {
 
   printf(ANSI_COLOR_CYAN "Consuming transition: %s %d, Token: %s\n" ANSI_COLOR_RESET, submachine, state, value);
 
-  if (strcmp(submachine, "PROGRAMA") == 0 && state == 1) {
-    addToDataArea("@ /0000");
-    addToDataArea("MAIN JP INICIO");
-    addToDataArea("ZERO K /0000");
-    addToCodeArea("INICIO LD ZERO");
+  if (strcmp(submachine, "PROGRAMA") == 0) {
+
+    if (state == 1) {
+      addToDataArea("@ /0000");
+      addToDataArea("MAIN JP INICIO");
+      addToDataArea("ZERO K /0000");
+      addToCodeArea("INICIO LD ZERO");
+    } else if (state == 5) {
+      addToCodeArea("FIM HM FIM");
+      addToCodeArea("# MAIN");
+    }
 
   }
 

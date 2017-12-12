@@ -12,3 +12,5 @@ LD 1temp
 MM 0temp
 LD 0temp ; Result of Anonymous Expression
 MM hello ; Assignment
+FIM HM FIM
+# MAIN

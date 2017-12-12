@@ -28,3 +28,5 @@ LD 6temp
 MM 2temp
 LD 2temp ; Result of Anonymous Expression
 MM world ; Assignment
+FIM HM FIM
+# MAIN

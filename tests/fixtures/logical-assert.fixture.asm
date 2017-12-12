@@ -41,3 +41,5 @@ MM 7temp
 LD 7temp ; Result of Anonymous Expression
 MM b ; Assignment
 4tempendif LD ZERO
+FIM HM FIM
+# MAIN
