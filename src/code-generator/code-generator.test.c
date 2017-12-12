@@ -47,7 +47,7 @@ int main() {
 
   processToken(generateToken(RESERVED_WORD, "WHILE"), onTransition);
   processToken(generateToken(IDENTIFIER, "hello"), onTransition);
-  processToken(generateToken(LOGICAL_COMPARER, "=="), onTransition);
+  processToken(generateToken(LOGICAL_COMPARER, ">"), onTransition);
   processToken(generateToken(NUMBER, "5"), onTransition);
   processToken(generateToken(RESERVED_WORD, "LOOP"), onTransition);
 

@@ -91,6 +91,49 @@ void consumeLogicOperator(char *op) {
     return;
   }
 
+  if (strcmp(op, "!=") == 0) {
+
+    s = stringWithText("JZ "); strcat(s, tmp); strcat(s, "salva0"); addToCodeArea(s);
+    addToCodeArea("LD UM");
+    s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
+    s = stringWithText("JP "); strcat(s, tmp); strcat(s, "final"); addToCodeArea(s);
+    s = stringWithText(tmp); strcat(s, "salva0 LD ZERO"); addToCodeArea(s);
+    s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
+    s = stringWithText(tmp); strcat(s, "final LD ZERO"); addToCodeArea(s);
+
+    return;
+  }
+
+  if (strcmp(op, ">") == 0 || strcmp(op, ">=") == 0) {
+    if (strcmp(op, ">") == 0) {
+      addToCodeArea("- UM");
+    }
+    char *s = stringWithText("JN "); strcat(s, tmp); strcat(s, "salva0"); addToCodeArea(s);
+    addToCodeArea("LD UM");
+    s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
+    s = stringWithText("JP "); strcat(s, tmp); strcat(s, "final"); addToCodeArea(s);
+    s = stringWithText(tmp); strcat(s, "salva0 LD ZERO");
+    s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
+    s = stringWithText(tmp); strcat(s, "final LD ZERO"); addToCodeArea(s);
+
+    return ;
+  }
+
+  if (strcmp(op, "<") == 0 || strcmp(op, "<=") == 0) {
+    if (strcmp(op, ">") == 0) {
+      addToCodeArea("+ UM");
+    }
+    char *s = stringWithText("JN "); strcat(s, tmp); strcat(s, "salva1"); addToCodeArea(s);
+    addToCodeArea("LD ZERO");
+    s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
+    s = stringWithText("JP "); strcat(s, tmp); strcat(s, "final"); addToCodeArea(s);
+    s = stringWithText(tmp); strcat(s, "salva1 LD UM");
+    s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
+    s = stringWithText(tmp); strcat(s, "final LD ZERO"); addToCodeArea(s);
+
+    return ;
+  }
+
   printf(ANSI_COLOR_RED "Unknown logic operator: %s\n" ANSI_COLOR_RESET, op);
   exit(EXIT_FAILURE);
 }
