@@ -19,22 +19,16 @@ void testToken(TokenType type, char *value, bool shouldBeValid) {
 
 int main() {
   printf(ANSI_COLOR_BLUE "\n  SYNTATIC ANALYSER\n" ANSI_COLOR_RESET);
-  testToken(RESERVED_WORD, "PROGRAM", true);
-  testToken(RESERVED_WORD, "VAR", true);
-  testToken(IDENTIFIER, "hello", true);
-  testToken(SEMICOLON, ";", true);
-  testToken(IDENTIFIER, "hello", true);
-  testToken(ATTRIBUTION, ":=", true);
-  testToken(NUMBER, "5", true);
-  testToken(SEMICOLON, ";", true);
-  testToken(RESERVED_WORD, "END", true);
+  testToken(IDENTIFIER, "a", true);
+  testToken(PUSH, ">", true);
+  testToken(NUMBER, "2", true);
 
   printf("\n\n");
   printf(
     ANSI_COLOR_GREEN "    ✓ " ANSI_COLOR_RESET "Should accept text syntatically correct\n"
   );
 
-  testToken(IDENTIFIER, "hello", false);
+  testToken(PARENTHESES, ")", false);
   printf(
     ANSI_COLOR_GREEN "    ✓ " ANSI_COLOR_RESET "Should reject unexpected token\n"
   );
