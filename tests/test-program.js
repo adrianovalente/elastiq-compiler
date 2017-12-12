@@ -4,7 +4,7 @@ export default function testProgram ({ program, shouldFail = false }) {
 
   return async function (t) {
     await Promise.all([
-      execCommand(`dist/elastiq-compiler tests/fixtures/${program}.el`),
+      execCommand(`dist/elastiq-compiler tests/fixtures/${program}.el /tmp/${program}.asm`),
       Promise.resolve(readFileSync(`tests/fixtures/${program}.fixture.asm`, 'utf-8').trim())
     ])
       .then(function ([r, expected]) {

@@ -23,6 +23,24 @@ void printCode() {
 
 }
 
+void saveCodeToFile(char *outputPath) {
+  FILE *fp = fopen(outputPath, "w");
+  char **p = NULL;
+
+  fprintf(fp, "\n\n;------- Data Area");
+  while ((p=(char**)utarray_next(dataArea, p))) {
+    fprintf(fp, "\n%s",*p);
+  }
+
+  fprintf(fp, "\n\n;------- Code Area\n");
+
+  while ((p=(char**)utarray_next(codeArea, p))) {
+    fprintf(fp, "%s\n",*p);
+  }
+
+  fclose(fp);
+}
+
 void addToDataArea(char *line) {
   utarray_push_back(dataArea, &line);
 }
