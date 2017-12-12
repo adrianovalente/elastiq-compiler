@@ -54,6 +54,9 @@ void getTokens(char *path, void (*cb)(Token *token)) {
   char *tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
   currentChar = fgetc(fp);
 
+  // feels bad there is some async issue I did not find out 🙈
+  int i; for (i = 0; i < 1E8; i++);
+
   while (currentChar != EOF) {
 
     if (isSpacer(currentChar)) {
