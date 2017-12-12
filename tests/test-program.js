@@ -11,7 +11,7 @@ export default function testProgram ({ program, shouldFail = false }) {
         if (shouldFail !== r.failed) {
           console.error(r.output)
 
-          throw new Error(`Compilation should ${ !fail ? 'not ' : ''}fail`)
+          throw new Error(`Compilation should ${ !shouldFail ? 'not ' : ''}fail`)
         }
 
         if (!shouldFail) {

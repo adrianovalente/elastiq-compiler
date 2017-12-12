@@ -78,13 +78,14 @@ void getTokens(char *path, void (*cb)(Token *token)) {
        */
       if (getCurrentState() == INITIAL_STATE) {
 
+        appendCharToString(tokenValue, currentChar);
         cb(finalizeToken(tokenValue, currentState));
 
         // reseting the token value
         tokenValue = malloc(MAX_TOKEN_VALUE * sizeof(char));
 
         // coming back one char so we will read it again
-        fseek(fp, -1 * sizeof(char), SEEK_CUR);
+        // fseek(fp, -1 * sizeof(char), SEEK_CUR);
 
       } else {
         appendCharToString(tokenValue, currentChar);
