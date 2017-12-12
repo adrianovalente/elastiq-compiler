@@ -1,13 +1,29 @@
+import { readFileSync } from 'fs'
 import { exec } from 'child_process'
 export default function testProgram ({ program, shouldFail = false }) {
-  execCommand(`dist/elastiq-compiler tests/fixtures/${program}.el`)
-    .then(r => {
-      if (shouldFail !== r.failed) {
-        console.error(r.output)
 
-        throw new Error(`Compilation should ${ !fail ? 'not ' : ''}fail`)
-      }
-    })
+  return async function (t) {
+    await Promise.all([
+      execCommand(`dist/elastiq-compiler tests/fixtures/${program}.el`),
+      Promise.resolve(readFileSync(`tests/fixtures/${program}.fixture.asm`, 'utf-8').trim())
+    ])
+      .then(function ([r, expected]) {
+        if (shouldFail !== r.failed) {
+          console.error(r.output)
+
+          throw new Error(`Compilation should ${ !fail ? 'not ' : ''}fail`)
+        }
+
+        if (!shouldFail) {
+          const program = r.output.split('Program is valid!')[1].trim()
+          t.is(program, expected)
+        }
+
+        return r
+      })
+
+    t.pass()
+  }
 
 }
 
