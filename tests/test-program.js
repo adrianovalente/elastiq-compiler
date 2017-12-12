@@ -16,6 +16,7 @@ export default function testProgram ({ program, shouldFail = false }) {
 
         if (!shouldFail) {
           const program = r.output.split('Program is valid!')[1].trim()
+          if (program !== expected) console.error(r.output)
           t.is(program, expected)
         }
 

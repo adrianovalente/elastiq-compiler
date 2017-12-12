@@ -8,6 +8,7 @@ typedef enum {
   STATE_Q6,
   STATE_Q7,
   STATE_Q8,
+  STATE_Q9,
   ERROR_STATE
 } State;
 

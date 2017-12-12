@@ -56,6 +56,7 @@ TokenType getTokenType(State state, char *tokenValue) {
     case STATE_Q2 : type = NUMBER; break;
     case STATE_Q3 : type = SEMICOLON; break;
     case STATE_Q5 : type = LOGICAL_COMPARER; break;
+    case STATE_Q9 : type = LOGICAL_COMPARER; break;
     case STATE_Q7 : type = ATTRIBUTION;  break;
     case STATE_Q8 : type = ARITHMETIC_OPERATOR; break;
 
