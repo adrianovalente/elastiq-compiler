@@ -3,6 +3,12 @@
 #include <stdlib.h>
 
 char *intToString(int a) {
-  char *str = malloc(4); sprintf(str, "%d", a);
+  char *str = malloc(4 * sizeof(char)); sprintf(str, "%d", a);
+  return str;
+}
+
+char *stringWithText(char *a) {
+  char *str = malloc((strlen(a) + 40) * sizeof(char));
+  strcpy(str, a);
   return str;
 }

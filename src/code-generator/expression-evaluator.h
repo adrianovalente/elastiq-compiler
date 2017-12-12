@@ -2,7 +2,7 @@
 #include "../utils/boolean.h"
 
 bool isEvaluatingExpression();
-void startExpression();
+char *startExpression();
 char *finishExpression();
 
 void addOperator(Token *token);
