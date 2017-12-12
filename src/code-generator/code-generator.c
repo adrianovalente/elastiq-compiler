@@ -12,7 +12,6 @@
 UT_array *varsBeingDeclared, *loops, *conditionals = NULL;
 char *s, *varBeingAssigned = NULL;
 bool waitingForIdentifierToAssign = false;
-int ifsCounter = 0;
 
 void consumeTransition(CodeGeneratorTransition *transition) {
   if (transition == NULL) {
@@ -115,16 +114,20 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       char *s = stringWithText("LD "); strcat(s, *condition); strcat(s, " ; Condition is here!");
 
       addToCodeArea(s);
-      char *counter = intToString(ifsCounter);
-      s = stringWithText("JZ "); strcat(s, counter); strcat(s, "endif ; Evaluating Conditional");
+      s = stringWithText("JZ "); strcat(s, *condition); strcat(s, "endif ; Evaluating Conditional");
       addToCodeArea(s);
 
     }
 
     if (state == 7) {
       printf("End if \n");
-      char *s = intToString(ifsCounter); strcat(s, "endif LD ZERO"); addToCodeArea(s);
-      ifsCounter++;
+      char **condition = (char **)utarray_back(conditionals);
+      char *s = stringWithText(*condition); strcat(s, "endif LD ZERO"); addToCodeArea(s);
+
+      utarray_pop_back(conditionals);
+      if (utarray_len(conditionals) == 0) {
+        utarray_free(conditionals); conditionals = NULL;
+      }
     }
   }
 
@@ -156,6 +159,9 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       s = stringWithText(*condition); strcat(s, "endLoop LD ZERO"); addToCodeArea(s);
 
       utarray_pop_back(loops);
+      if (utarray_len(loops) == 0) {
+        utarray_free(loops); loops = NULL;
+      }
     }
   }
 
