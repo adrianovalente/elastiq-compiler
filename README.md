@@ -33,6 +33,8 @@ After that, you can compile a `.el` file using the generated binary:
 ./dist/elastiq-compiler example.el
 ```
 
+![](http://g.recordit.co/lOaswZN7To.gif)
+
 ## Lexical Analyzer
 In our first concept of the language, it will have:
   - identifiers (such as variable names);
