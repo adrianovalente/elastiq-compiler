@@ -142,7 +142,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       char *condition = startExpression();
       utarray_push_back(loops, &condition);
 
-      char *s = stringWithText(condition); strcat(s, "startLoop LD ZERO ; Beginning of a loop "); addToCodeArea(s);
+      char *s = stringWithText(condition); strcat(s, "startLoop LD ZERO ; Beginning of a loop"); addToCodeArea(s);
     }
 
     if (state == 3) {
