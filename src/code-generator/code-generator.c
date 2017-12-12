@@ -9,7 +9,7 @@
 #include "./code-repository.h"
 #include "./expression-evaluator.h"
 
-UT_array *varsBeingDeclared = NULL;
+UT_array *varsBeingDeclared, *loops, *conditionals = NULL;
 char *s, *varBeingAssigned = NULL;
 bool waitingForIdentifierToAssign = false;
 int ifsCounter = 0;
@@ -28,7 +28,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
 
   if (strcmp(submachine, "PROGRAMA") == 0) {
     addToDataArea("@ /0000");
-    addToDataArea("JP INICIO");
+    addToDataArea("MAIN JP INICIO");
     addToDataArea("ZERO K /0000");
     addToCodeArea("INICIO LD ZERO");
 
@@ -95,15 +95,24 @@ void consumeTransition(CodeGeneratorTransition *transition) {
   if (strcmp(submachine, "condicional") == 0) {
 
     if (state == 1) {
+
       printf("Starting a conditional.\n");
-      startExpression();
+
+      // init a new stack to store all loops if it's not defined yet.
+      if (loops == NULL) {
+        utarray_new(conditionals, &ut_str_icd);
+      }
+
+      char *condition = startExpression();
+      utarray_push_back(conditionals, &condition);
     }
 
     if (state == 3) {
-      char *condition = finishExpression();
+      finishExpression();
+      char **condition = (char **)utarray_back(conditionals);
 
-      printf("Condition is stored here %s\n", condition);
-      char *s = stringWithText("LD "); strcat(s, condition); strcat(s, " ; Condition is here!");
+      printf("Condition is stored here %s\n", *condition);
+      char *s = stringWithText("LD "); strcat(s, *condition); strcat(s, " ; Condition is here!");
 
       addToCodeArea(s);
       char *counter = intToString(ifsCounter);
@@ -116,6 +125,37 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       printf("End if \n");
       char *s = intToString(ifsCounter); strcat(s, "endif LD ZERO"); addToCodeArea(s);
       ifsCounter++;
+    }
+  }
+
+  if (strcmp(submachine, "iterativo") == 0) {
+    if (state == 1) {
+      printf("Starting a loop.\n");
+
+      if (loops == NULL) {
+        utarray_new(loops, &ut_str_icd);
+      }
+
+      char *condition = startExpression();
+      utarray_push_back(loops, &condition);
+
+      char *s = stringWithText(condition); strcat(s, "startLoop LD ZERO ; Beginning of a loop "); addToCodeArea(s);
+    }
+
+    if (state == 3) {
+      finishExpression();
+      char **condition = (char **)utarray_back(loops);
+      char *s = stringWithText("LD "); strcat(s, *condition); strcat(s, " ; Verifying loop condition"); addToCodeArea(s);
+      s = stringWithText("JZ "); strcat(s, *condition); strcat(s, "endLoop"); addToCodeArea(s);
+    }
+
+    if (state == 5) {
+      printf("Finishing loop.\n");
+      char **condition = (char **)utarray_back(loops);
+      char *s = stringWithText("JP "); strcat(s, *condition); strcat(s, "startLoop ; Loop"); addToCodeArea(s);
+      s = stringWithText(*condition); strcat(s, "endLoop LD ZERO"); addToCodeArea(s);
+
+      utarray_pop_back(loops);
     }
   }
 

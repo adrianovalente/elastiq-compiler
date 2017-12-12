@@ -45,11 +45,11 @@ int main() {
 
   processToken(generateToken(SEMICOLON, ";"), onTransition);  // sorry
 
-  processToken(generateToken(RESERVED_WORD, "IF"), onTransition);
+  processToken(generateToken(RESERVED_WORD, "WHILE"), onTransition);
   processToken(generateToken(IDENTIFIER, "hello"), onTransition);
   processToken(generateToken(LOGICAL_COMPARER, "=="), onTransition);
   processToken(generateToken(NUMBER, "5"), onTransition);
-  processToken(generateToken(RESERVED_WORD, "THEN"), onTransition);
+  processToken(generateToken(RESERVED_WORD, "LOOP"), onTransition);
 
   processToken(generateToken(IDENTIFIER, "world"), onTransition);
   processToken(generateToken(ATTRIBUTION, ":="), onTransition);
@@ -57,7 +57,7 @@ int main() {
   processToken(generateToken(SEMICOLON, ";"), onTransition);
 
   processToken(generateToken(RESERVED_WORD, "END"), onTransition);
-  processToken(generateToken(RESERVED_WORD, "IF"), onTransition);
+  processToken(generateToken(RESERVED_WORD, "LOOP"), onTransition);
   processToken(generateToken(SEMICOLON, ";"), onTransition);
 
 

@@ -62,7 +62,6 @@ void consumeArithmeticOperator(char *op) {
 void consumeLogicOperator(char *op) {
 
   if (strcmp(op, "==") == 0) {
-    printf("== feels good man\n");
 
     char **firstOperand = (char **)utarray_back(operandsStack);
     char *s = stringWithText("LD "); strcat(s, *firstOperand); strcat(s, " ; First logical operator"); addToCodeArea(s);
@@ -165,8 +164,10 @@ void addOperator(Token *token) {
 
 /**
  * Starts evaluating an expression.
+ *
+ * @returns {string} the temp register where the expression is stored.
  */
-void startExpression() {
+char *startExpression() {
   if (isEvaluatingExpression()) {
     printf(ANSI_COLOR_RED "Semantic Error: Expression already being evaluated!\n" ANSI_COLOR_RESET);
     exit(EXIT_FAILURE);
@@ -179,6 +180,9 @@ void startExpression() {
 
   utarray_new(operandsStack, &ut_str_icd);
   utarray_new(operatorsStack, &ut_str_icd);
+
+  printf(ANSI_COLOR_YELLOW "Started evaluation expression %s\n" ANSI_COLOR_RESET, label);
+  return label;
 }
 
 /**
@@ -192,7 +196,6 @@ char *finishExpression() {
     exit(EXIT_FAILURE);
   }
 
-  printf(ANSI_COLOR_YELLOW "Finishing expression %s\n" ANSI_COLOR_RESET, label);
   while (utarray_len(operatorsStack) > 0) {
     char **op = (char **)utarray_back(operatorsStack);
     consumeOperator(*op);
@@ -210,5 +213,6 @@ char *finishExpression() {
   s = stringWithText("MM "); strcat(s, label); addToCodeArea(s);
 
   state = ExpressionStatePaused;
+  printf(ANSI_COLOR_YELLOW "Finishing expression %s\n" ANSI_COLOR_RESET, label);
   return label;
 }
