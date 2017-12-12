@@ -1,1 +1,1 @@
-hello    world  :=23 BEGIN
+hello    world  := 23 BEGIN

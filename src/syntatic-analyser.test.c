@@ -31,7 +31,6 @@ int main() {
   testToken(SEMICOLON, ";", true);
   testToken(RESERVED_WORD, "END", true);
 
-  printf("\n\n");
   printf(
     ANSI_COLOR_GREEN "    ✓ " ANSI_COLOR_RESET "Should accept text syntatically correct\n"
   );

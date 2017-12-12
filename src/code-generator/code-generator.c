@@ -26,10 +26,17 @@ void consumeTransition(CodeGeneratorTransition *transition) {
   printf(ANSI_COLOR_CYAN "Consuming transition: %s %d, Token: %s\n" ANSI_COLOR_RESET, submachine, state, value);
 
   if (strcmp(submachine, "PROGRAMA") == 0) {
-    addToDataArea("@ /0000");
-    addToDataArea("MAIN JP INICIO");
-    addToDataArea("ZERO K /0000");
-    addToCodeArea("INICIO LD ZERO");
+
+    if (state == 1) {
+      addToDataArea("@ /0000");
+      addToDataArea("MAIN JP INICIO");
+      addToDataArea("ZERO K /0000");
+      addToDataArea("UM K /0001");
+      addToCodeArea("INICIO LD ZERO");
+    } else if (state == 5) {
+      addToCodeArea("FIM HM FIM");
+      addToCodeArea("# MAIN");
+    }
 
   }
 
@@ -142,7 +149,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       char *condition = startExpression();
       utarray_push_back(loops, &condition);
 
-      char *s = stringWithText(condition); strcat(s, "startLoop LD ZERO ; Beginning of a loop "); addToCodeArea(s);
+      char *s = stringWithText(condition); strcat(s, "startLoop LD ZERO ; Beginning of a loop"); addToCodeArea(s);
     }
 
     if (state == 3) {

@@ -36,6 +36,7 @@ char *getStateDescription(State state) {
     case STATE_Q6     : stateDescription = "STATE_Q6"; break;
     case STATE_Q7     : stateDescription = "STATE_Q7"; break;
     case STATE_Q8     : stateDescription = "STATE_Q8"; break;
+    case STATE_Q9     : stateDescription = "STATE_Q9"; break;
     case ERROR_STATE  : stateDescription = "ERROR_STATE"; break;
   }
 
@@ -61,6 +62,7 @@ void processChar(int a) {
       else if (isdigit(a)) nextState = STATE_Q2;
       else if (a == ';') nextState = STATE_Q3;
       else if (a == '!' || a == '=') nextState = STATE_Q4;
+      else if (a == '>' || a == '<') nextState = STATE_Q9;
       else if (a == ':') nextState = STATE_Q6;
       else if (a == '+' || a == '-'|| a == '*' || a == '/') nextState = STATE_Q8;
       break;
@@ -76,6 +78,10 @@ void processChar(int a) {
       // reading anything but a number is an error in this stage
       else nextState = ERROR_STATE;
 
+      break;
+
+    case STATE_Q9:
+      if (a == '=') nextState = STATE_Q5;
       break;
 
 

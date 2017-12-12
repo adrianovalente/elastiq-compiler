@@ -22,8 +22,13 @@ void onGetToken(Token *token) {
 
 int main(int argc, char *argv[]) {
   char *filePath = argv[1];
-  if (!filePath) {
+  char *outputPath = argv[2];
+  if (!filePath || strlen(filePath) == 0) {
     printf(ANSI_COLOR_RED "Please provide a file to be analysed!" ANSI_COLOR_RESET);
+  }
+
+  if (!outputPath || strlen(outputPath) == 0) {
+    printf(ANSI_COLOR_RED "Please provide an output path!" ANSI_COLOR_RESET);
   }
 
   initCodeGenerator();
@@ -36,5 +41,6 @@ int main(int argc, char *argv[]) {
     printf(ANSI_COLOR_GREEN "\n✓ " ANSI_COLOR_RESET "Program is valid!\n");
   }
 
+  saveCodeToFile(outputPath);
   printCode();
 }

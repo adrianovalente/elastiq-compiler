@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "make test",
-    "test:watch": "nodemon --watch src -e el,js,h,c --exec 'make test || true'"
+    "test:watch": "nodemon --watch src --watch tests -e el,js,h,c,asm --exec 'make test && make build && npm run integration-tests || true'",
+    "integration-tests": "ava --verbose"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,23 @@
   },
   "homepage": "https://github.com/adrianovalente/elastiq-compiler#readme",
   "devDependencies": {
+    "ava": "^0.24.0",
+    "babel-cli": "^6.24.1",
+    "babel-plugin-istanbul": "^4.1.4",
+    "babel-plugin-syntax-class-properties": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
     "nodemon": "^1.12.1"
+  },
+  "ava": {
+    "require": "babel-register",
+    "babel": {
+      "babelrc": true
+    },
+    "files": [
+      "tests/*.test.js"
+    ]
   }
 }
