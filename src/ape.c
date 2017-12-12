@@ -80,7 +80,7 @@ TransicaoChamada * busca_submaquina_possivel(Automato *automato, Token *token) {
 
         switch (token->type) {
             case IDENTIFIER:
-                chaveBusca = "id";
+                chaveBusca = "stackId";
                 break;
             case NUMBER:
                 chaveBusca = "numero";
@@ -187,7 +187,7 @@ bool consome_token(APE *ape, Token *token) {
         automato->estado = chamada->estadoResultado;
 
         /* Empilha automato e consome token novamente */
-        if (strcmp(chamada->submaquina, "id") != 0
+        if (strcmp(chamada->submaquina, "stackId") != 0
             &&
             strcmp(chamada->submaquina, "numero") != 0) {
 

@@ -20,7 +20,7 @@ void testToken(TokenType type, char *value, bool shouldBeValid) {
 int main() {
   printf(ANSI_COLOR_BLUE "\n  SYNTATIC ANALYSER\n" ANSI_COLOR_RESET);
   testToken(IDENTIFIER, "a", true);
-  testToken(PUSH, ">", true);
+  testToken(PUSH, "+", true);
   testToken(NUMBER, "2", true);
 
   printf("\n\n");
