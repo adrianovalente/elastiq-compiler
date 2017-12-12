@@ -2,6 +2,7 @@
 @ /0000
 MAIN JP INICIO
 ZERO K /0000
+UM K /0001
 entrada K /0000
 fatorial K /0000
 0temp K /0000 ; Anonymous Expression
@@ -10,6 +11,7 @@ fatorial K /0000
 3temp K =1
 4temp K /0000 ; Anonymous Expression
 5temp K =0
+6temp K /0000
 7temp K /0000 ; Anonymous Expression
 8temp K /0000
 9temp K /0000 ; Anonymous Expression
@@ -34,6 +36,7 @@ JN 6tempsalva0
 LD UM
 MM 6temp
 JP 6tempfinal
+6tempsalva0 LD ZERO
 MM 6temp
 6tempfinal LD ZERO
 LD 6temp

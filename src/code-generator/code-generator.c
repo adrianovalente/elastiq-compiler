@@ -31,6 +31,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
       addToDataArea("@ /0000");
       addToDataArea("MAIN JP INICIO");
       addToDataArea("ZERO K /0000");
+      addToDataArea("UM K /0001");
       addToCodeArea("INICIO LD ZERO");
     } else if (state == 5) {
       addToCodeArea("FIM HM FIM");

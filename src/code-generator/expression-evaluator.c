@@ -73,8 +73,9 @@ void consumeLogicOperator(char *op) {
   // pushing result
   char *tmp = getTempVar();
   utarray_push_back(operandsStack, &tmp); // pushing value to tmp var
+  char *s = stringWithText(tmp); strcat(s, " K /0000"); addToDataArea(s);
 
-  char *s = stringWithText("LD "); strcat(s, firstOperand); strcat(s, " ; First logical operator"); addToCodeArea(s);
+  s = stringWithText("LD "); strcat(s, firstOperand); strcat(s, " ; First logical operator"); addToCodeArea(s);
   s = stringWithText("- "); strcat(s, secondOperand); strcat(s, " ; Second logical operator"); addToCodeArea(s);
 
 
@@ -112,7 +113,7 @@ void consumeLogicOperator(char *op) {
     addToCodeArea("LD UM");
     s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
     s = stringWithText("JP "); strcat(s, tmp); strcat(s, "final"); addToCodeArea(s);
-    s = stringWithText(tmp); strcat(s, "salva0 LD ZERO");
+    s = stringWithText(tmp); strcat(s, "salva0 LD ZERO"); addToCodeArea(s);
     s = stringWithText("MM "); strcat(s, tmp); addToCodeArea(s);
     s = stringWithText(tmp); strcat(s, "final LD ZERO"); addToCodeArea(s);
 
