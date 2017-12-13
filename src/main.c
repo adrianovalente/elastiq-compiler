@@ -25,10 +25,12 @@ int main(int argc, char *argv[]) {
   char *outputPath = argv[2];
   if (!filePath || strlen(filePath) == 0) {
     printf(ANSI_COLOR_RED "Please provide a file to be analysed!" ANSI_COLOR_RESET);
+    exit(EXIT_FAILURE);
   }
 
   if (!outputPath || strlen(outputPath) == 0) {
     printf(ANSI_COLOR_RED "Please provide an output path!" ANSI_COLOR_RESET);
+    exit(EXIT_FAILURE);
   }
 
   initCodeGenerator();
