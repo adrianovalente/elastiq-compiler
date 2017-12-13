@@ -30,7 +30,7 @@ To have a copy of the compiler running on your computer, just `git clone` it and
 After that, you can compile a `.el` file using the generated binary:
 
 ``` bash
-./dist/elastiq-compiler example.el
+./dist/elastiq-compiler tests/fixtures/factorial.el factorial.mvn
 ```
 
 ![](http://g.recordit.co/lOaswZN7To.gif)

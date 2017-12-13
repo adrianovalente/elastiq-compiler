@@ -13,6 +13,26 @@ UT_array *varsBeingDeclared, *loops, *conditionals = NULL;
 char *s, *varBeingAssigned = NULL;
 bool waitingForIdentifierToAssign = false;
 
+void saveAttribution() {
+  char *exp = finishExpression();
+  char *s = stringWithText("LD "); strcat(s, exp); strcat(s, " ; Result of Anonymous Expression"); addToCodeArea(s);
+  s = stringWithText("MM "); strcat(s, varBeingAssigned); strcat(s, " ; Assignment"); addToCodeArea(s);
+  varBeingAssigned = NULL;
+}
+
+void initProgram() {
+  addToDataArea("@ /0000");
+  addToDataArea("MAIN JP INICIO");
+  addToDataArea("ZERO K /0000");
+  addToDataArea("UM K /0001");
+  addToCodeArea("INICIO LD ZERO");
+}
+
+void finishProgram() {
+  addToCodeArea("FIM HM FIM");
+  addToCodeArea("# MAIN");
+}
+
 void consumeTransition(CodeGeneratorTransition *transition) {
   if (transition == NULL) {
     printf(ANSI_COLOR_RED "SYNTAX ERROR! 🤷‍♀️\n" ANSI_COLOR_RESET);
@@ -28,14 +48,9 @@ void consumeTransition(CodeGeneratorTransition *transition) {
   if (strcmp(submachine, "PROGRAMA") == 0) {
 
     if (state == 1) {
-      addToDataArea("@ /0000");
-      addToDataArea("MAIN JP INICIO");
-      addToDataArea("ZERO K /0000");
-      addToDataArea("UM K /0001");
-      addToCodeArea("INICIO LD ZERO");
+      initProgram();
     } else if (state == 5) {
-      addToCodeArea("FIM HM FIM");
-      addToCodeArea("# MAIN");
+      finishProgram();
     }
 
   }
@@ -70,10 +85,7 @@ void consumeTransition(CodeGeneratorTransition *transition) {
     } else if (state == 2) {
       startExpression();
     } else if (state == 4) {
-      char *exp = finishExpression();
-      char *s = stringWithText("LD "); strcat(s, exp); strcat(s, " ; Result of Anonymous Expression"); addToCodeArea(s);
-      s = stringWithText("MM "); strcat(s, varBeingAssigned); strcat(s, " ; Assignment"); addToCodeArea(s);
-      varBeingAssigned = NULL;
+      saveAttribution();
     }
   }
 
