@@ -3,4 +3,4 @@
 set -e # Isso serve pra ele não continuar executando se encontrar algum erro.
 java -cp "$(pwd)"/bin/MLR.jar montador.MvnAsm $1.asm
 echo $1.mvn
-java -jar "$(pwd)"/mvn.jar
+java -jar "$(pwd)"/bin/mvn.jar

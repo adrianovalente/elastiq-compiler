@@ -20,41 +20,41 @@ world := 2 * hello + 5;
 END PROGRAM;
 ```
 
-## What is this repo about?
-
-This repo holds the `elastiq` compiler, as well as the language documentation.
-
 ## Getting Started
 To have a copy of the compiler running on your computer, just `git clone` it and then run `make`.
 
 After that, you can compile a `.el` file using the generated binary:
 
 ``` bash
-./dist/elastiq-compiler example.el
+./dist/elastiq-compiler tests/fixtures/factorial.el factorial.mvn
 ```
 
-## Lexical Analyzer
-In our first concept of the language, it will have:
+<img src="http://g.recordit.co/lOaswZN7To.gif" width="80%"/>
+
+Once it's compiled, you can use the MVN Simuulator to run the code:
+
+``` bash
+./bin/mounter factorial
+```
+
+## But how it works?
+**elastiq** is a language created during our [PCS2056 (Languages and Compilers)](https://uspdigital.usp.br/jupiterweb/obterDisciplina?sgldis=PCS2056) course. It was built with a **Lexical Analyzer (tokenizer)**, a **Syntactic Analyzer** and a **Code Generator**.
+
+### Lexical Analyzer
+Extracts tokens from the source code, such as:
   - identifiers (such as variable names);
   - numbers;
   - arithmetic operators;
   - logical operators;
   - control structures such as `if`s and `while`s
 
-You can take an example of program written in *Elastiq* [here](./src/fixtures/hello.el).
+<!-- You can take an example of program written in *Elastiq* [here](./src/fixtures/hello.el). -->
 
-The **[Lexical Analyzer](https://en.wikipedia.org/wiki/Lexical_analysis)** is responsible for parsing the source code and outputting `tokens`. To run the lexical analyzer, all you have to do is to `make` and then `./dist/lexical-analyzer PATH_TO_YOUR_FILE`:
-
-To build the lexical analyzer, just the following command:
-
-  ``` bash
-  make build-lexical
-  dist/lexical /path/to/your/file.el
-  ```
+The [Lexical Analyzer](https://en.wikipedia.org/wiki/Lexical_analysis) is responsible for parsing the source code and outputting `tokens`.
 
 <!-- ![image](http://g.recordit.co/9FLVepoRb0.gif) -->
 
-## Syntactical Analyzer
+### Syntactical Analyzer
 Syntax Analysis will verify if the program is valid and will also generate a syntactic tree.
 You can see the Wirth Notation for *Elastiq* [here](./src/fixtures/syntax.wirth).
 
